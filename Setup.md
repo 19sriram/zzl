@@ -15,3 +15,11 @@ npm install --save-dev file-loader url-loader
 npm install --save-dev autoprefixer
 
 npm install --save-dev html-webpack-plugin
+
+# Installations
+
+webpack with dev-server
+
+react 
+
+antd
