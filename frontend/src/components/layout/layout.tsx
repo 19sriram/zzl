@@ -1,11 +1,13 @@
 import { Layout, Menu, Breadcrumb } from 'antd';
-import { Component } from 'react';
+import { Component, useEffect } from 'react';
 import './layout.css';
- 
+ import {getUser} from '../api/api';
 
-const LayoutWrapper = ()=> {
+
+
+const LayoutWrapper= ()=> {
   const { Header, Content, Footer } = Layout;
-
+  getUser();
   return (
     <>
      <Layout>
