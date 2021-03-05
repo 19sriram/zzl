@@ -11,3 +11,8 @@ CEO | LPartner -> Admin -> Executives
     -> Managers -> Executives
     -> Custom Roles
 ```
+
+1. CEO
+    - Admin
+    - Managers
+        - Executives   
