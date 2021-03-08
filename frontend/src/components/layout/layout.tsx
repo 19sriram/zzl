@@ -1,9 +1,9 @@
 import { Layout, Menu, Breadcrumb } from 'antd';
-import { Component, useEffect } from 'react';
+// import { Component, useEffect } from 'react';
 import './layout.css';
  import {getUser} from '../api/api';
-import AddUser from '../usermgmt/adduser';
-
+// import AddUser from '../usermgmt/adduser';
+import AddRole from '../rolemgmt/addrole';
 
 const LayoutWrapper= ()=> {
   const { Header, Content, Footer } = Layout;
@@ -26,8 +26,8 @@ const LayoutWrapper= ()=> {
 <Breadcrumb.Item>App</Breadcrumb.Item>
 </Breadcrumb>
 <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
-<AddUser/>
-
+{/* <AddUser/> */}
+<AddRole/>
 </div>
 </Content>
 <Footer style={{ textAlign: 'center' }}>Footer ZZL</Footer>
