@@ -2,7 +2,7 @@ import { Layout, Menu, Breadcrumb } from 'antd';
 import { Component, useEffect } from 'react';
 import './layout.css';
  import {getUser} from '../api/api';
-
+import AddUser from '../usermgmt/adduser';
 
 
 const LayoutWrapper= ()=> {
@@ -26,7 +26,7 @@ const LayoutWrapper= ()=> {
 <Breadcrumb.Item>App</Breadcrumb.Item>
 </Breadcrumb>
 <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
-
+<AddUser/>
 
 </div>
 </Content>
