@@ -36,6 +36,9 @@ const AddUser = ()=>{
         <Form.Item name={['user', 'lastName']} label="Last Name" rules={[{ required: true, message: 'Please enter your last name' }]}>
           <Input />
         </Form.Item>
+        <Form.Item name={['user', 'userPhonenumber']} label="Phone Number" rules={[{ required: true, message: 'Please enter your phone number', type:'number' }]}>
+          <Input />
+        </Form.Item>
         <Form.Item name={['user', 'userEmail']} label="Email" rules={[{ required: true, type: 'email', message: 'Please enter your email address'  }]}>
           <Input />
         </Form.Item>
