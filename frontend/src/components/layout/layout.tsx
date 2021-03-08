@@ -3,7 +3,7 @@ import { Layout, Menu, Breadcrumb } from 'antd';
 import './layout.css';
  import {getUser} from '../api/api';
 // import AddUser from '../usermgmt/adduser';
-import AddRole from '../rolemgmt/addrole';
+// import AddRole from '../rolemgmt/addrole';
 
 const LayoutWrapper= ()=> {
   const { Header, Content, Footer } = Layout;
@@ -27,7 +27,7 @@ const LayoutWrapper= ()=> {
 </Breadcrumb>
 <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
 {/* <AddUser/> */}
-<AddRole/>
+{/* <AddRole/> */}
 </div>
 </Content>
 <Footer style={{ textAlign: 'center' }}>Footer ZZL</Footer>
