@@ -6,7 +6,7 @@ JWT_SECRET_KEY='lead_management'
 
 
 
-Backend code setup steps:-
+**Backend code setup steps:-**
 
 1. clone the backend code
 2. go to the project directory
@@ -17,4 +17,4 @@ Backend code setup steps:-
 5. run npm install in the terminal  //to instal the depencencies.
 6. rum npm start // To start the Node server
 
-Now the server is running on http://yourip:port
+Now the server is running on **http://yourip:port**
