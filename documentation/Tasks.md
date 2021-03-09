@@ -1,6 +1,9 @@
 # FrontEnd
-1. Sign up form 
-2. 
+ ## User Management & Role Management
+  1. ~~Create user~~
+  2. ~~Create role~~
+  3. ~~Create tree view for roles~~
+
 
 
 
