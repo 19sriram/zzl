@@ -4,7 +4,7 @@ import './layout.css';
  import {getUser} from '../api/api';
 import AddUser from '../usermgmt/adduser';
 // import AddRole from '../rolemgmt/addrole';
-
+// import Treeview from '../treeview/treeview';
 const LayoutWrapper= ()=> {
   const { Header, Content, Footer } = Layout;
   getUser();
@@ -28,6 +28,7 @@ const LayoutWrapper= ()=> {
 <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
 <AddUser/>
 {/* <AddRole/> */}
+{/* <Treeview/> */}
 </div>
 </Content>
 <Footer style={{ textAlign: 'center' }}>Footer ZZL</Footer>
