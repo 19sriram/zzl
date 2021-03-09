@@ -11,6 +11,7 @@ router.post('/updateuser', user.updateUser);
 router.post('/addrole', role.addRole);
 router.get('/viewrole', role.viewRole);
 router.post('/updaterole', role.updateRole);
+router.post('/updatepassword', user.updatePassword);
 
 
 module.exports = router;

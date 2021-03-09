@@ -94,9 +94,27 @@ const updateuserdetails = async(data) => {
     }
 };
 
+const updatepassworddetails = async(data) => {
+    try {
+  
+         const users = await model.updateMany(
+            {"email" : data.email},
+            {$set: {"password" : data.password,"createdOn": new Date()}},
+            {new : true}
+        );
+
+         return users;
+    } catch(err) {
+
+        console.log("hai")
+        return false
+    }
+};
+
 module.exports = { 
     saveuserdetails,
     viewuserdetails,
     deleteuserdetails,
-    updateuserdetails
+    updateuserdetails,
+    updatepassworddetails
  };

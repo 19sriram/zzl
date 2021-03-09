@@ -16,14 +16,14 @@ const addUser = async (req, res) => {
             return false           
         }
          
-        req.body.password = 'Admin@123';
+        var password = 'Admin@123';
         req.body.createdOn = '';
         req.body.isActive = true;
         req.body.createdOn = new Date();
 
-        // const salt = await bcrypt.genSalt(10);
-        // const hashedPassword = await bcrypt.hash(password, salt);
-        // req.body.password = hashedPassword;
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        req.body.password = hashedPassword;
 
         const saveuser = await users.saveuserdetails(req.body)
         if(saveuser){
@@ -95,10 +95,36 @@ const updateUser = async (req, res) => {
     }
 };
 
+const updatePassword = async (req, res) => {
+    try {
+        const checkExists = await users.viewuserdetails({email:req.body.email})
+        if(checkExists.length===0){
+            res.send({ status: 200, result: "Failure", message: 'User Not Found!'}); 
+            return false           
+        }
+
+         const salt = await bcrypt.genSalt(10);
+         const hashedPassword = await bcrypt.hash(req.body.password, salt);
+         req.body.password = hashedPassword;
+
+        const updatepassword = await users.updatepassworddetails(req.body)
+        if(updatepassword){
+            res.send({ status: 200, result: "Success", message: 'Password Updated Successfully!'});
+        }
+        else{
+            res.send({ status: 400, result: "Failure", Message: 'Some Thing Went Wrong!'});
+        }
+
+    } catch(err) {
+        res.send({ status: 400, msg: 'Some Thing Went Wrong!'}); 
+    }
+};
+
 module.exports = {
      addUser,
      viewUser,
      deleteUser,
-     updateUser
+     updateUser,
+     updatePassword
 
 };
