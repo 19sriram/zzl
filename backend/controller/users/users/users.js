@@ -3,6 +3,7 @@
 const httpErrors = require('http-errors');
 const users = require('./service');
 const bcrypt = require('bcrypt');
+const JWT = require('jsonwebtoken');
 
 
 
@@ -120,11 +121,38 @@ const updatePassword = async (req, res) => {
     }
 };
 
+const userLogin = async (req, res) => {
+    try {
+
+        console.log("hai")
+        const getUser = await users.viewuserdetails({email:req.body.email});
+        console.log("hai1")
+        if(getUser.length === 0)
+        {
+            res.send({ status: 200, result: "Failure", message: 'User Not Found!'}); 
+            return false 
+        }
+        console.log("hai2",getUser)
+        const match = await bcrypt.compare(req.body.password, getUser[0].password);
+        console.log("hai3")
+        if (match) { 
+            const token = JWT.sign({ id: getUser.id }, process.env.JWT_SECRET_KEY);
+            res.send({ status: 200, result:"Success" ,message: "LoggedIn Successfully!", accessToken: token });
+        } else { 
+            res.send({ status: 200, result:"Failure", message: "Incorrect Password!" });
+        }
+
+    } catch(err) {
+        res.send({ status: 400, msg: 'Some Thing Went Wrong!'}); 
+    }
+};
+
 module.exports = {
      addUser,
      viewUser,
      deleteUser,
      updateUser,
-     updatePassword
+     updatePassword,
+     userLogin
 
 };
