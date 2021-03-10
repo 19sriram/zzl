@@ -136,7 +136,7 @@ const userLogin = async (req, res) => {
         const match = await bcrypt.compare(req.body.password, getUser[0].password);
         console.log("hai3")
         if (match) { 
-            const token = JWT.sign({ id: getUser.id }, process.env.JWT_SECRET_KEY);
+            const token = JWT.sign({  id: getUser[0].id,role:getUser[0].role }, process.env.JWT_SECRET_KEY);
             res.send({ status: 200, result:"Success" ,message: "LoggedIn Successfully!", accessToken: token });
         } else { 
             res.send({ status: 200, result:"Failure", message: "Incorrect Password!" });
