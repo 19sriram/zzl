@@ -5,7 +5,7 @@ import './layout.css';
 import AddUser from '../usermgmt/adduser';
 import AddRole from '../rolemgmt/addrole';
 import Treeview from '../treeview/treeview';
-
+import ViewUser from '../usermgmt/viewuser';
 import {
   BrowserRouter as Router,
   Switch,
@@ -24,17 +24,18 @@ const LayoutWrapper= ()=> {
 <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
 <div className="logo" />
  <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
- <Menu.Item key="1"><Link to="/">Users</Link></Menu.Item>
- <Menu.Item key="2"><Link to="/roles">Roles</Link></Menu.Item>
+ <Menu.Item key="1"><Link to="/">Add Users</Link></Menu.Item>
+ <Menu.Item key="2"><Link to="/roles">Add Roles</Link></Menu.Item>
  <Menu.Item key="3"><Link to="/hierarchy">Hierarchy</Link></Menu.Item>
+ <Menu.Item key="4"><Link to="/viewuser">View User</Link></Menu.Item>
  </Menu>
 </Header>
 <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
-<Breadcrumb style={{ margin: '16px 0' }}>
+{/* <Breadcrumb style={{ margin: '16px 0' }}>
 <Breadcrumb.Item>Home</Breadcrumb.Item>
 <Breadcrumb.Item>List</Breadcrumb.Item>
 <Breadcrumb.Item>App</Breadcrumb.Item>
-</Breadcrumb>
+</Breadcrumb> */}
 <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
 <Switch>
           <Route path="/hierarchy">
@@ -43,13 +44,17 @@ const LayoutWrapper= ()=> {
           <Route path="/roles">
             <AddRole />
           </Route>
+          <Route path="/viewuser">
+            <ViewUser />
+          </Route>
           <Route path="/">
             <AddUser />
           </Route>
+         
         </Switch>
 </div>
 </Content>
-<Footer style={{ textAlign: 'center' }}>Footer ZZL</Footer>
+<Footer style={{ textAlign: 'center' }}>MIT License - 2021 &copy; </Footer>
 </Router>
 </Layout>
     </>
