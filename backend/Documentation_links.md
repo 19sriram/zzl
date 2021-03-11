@@ -18,3 +18,8 @@ JWT_SECRET_KEY='lead_management'
 6. rum npm start // To start the Node server
 
 Now the server is running on **http://yourip:port**
+
+
+**Installed software**
+1. MongoDB Community edition
+2. Robo 3T - Mongo UI
