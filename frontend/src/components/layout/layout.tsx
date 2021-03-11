@@ -6,6 +6,7 @@ import AddUser from '../usermgmt/adduser';
 import AddRole from '../rolemgmt/addrole';
 import Treeview from '../treeview/treeview';
 import ViewUser from '../usermgmt/viewuser';
+import TimeLine from '../timeline/timeline';
 import {
   BrowserRouter as Router,
   Switch,
@@ -46,6 +47,9 @@ const LayoutWrapper= ()=> {
           </Route>
           <Route path="/viewuser">
             <ViewUser />
+          </Route>
+          <Route path="/timeline">
+            <TimeLine />
           </Route>
           <Route path="/">
             <AddUser />
