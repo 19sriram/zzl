@@ -30,7 +30,7 @@ export const userData = [{
     "lastname": "Hilton",
     "email": "paris@hilton.com",
     "createdOn": "12/03/2021",
-    "isActive": true,
+    "isActive": false,
     "role": "manager",
     "phonenumber": "1111"
   },
@@ -48,7 +48,7 @@ export const userData = [{
     "lastname": "John",
     "email": "David@john.com",
     "createdOn": "12/03/2021",
-    "isActive": true,
+    "isActive": false,
     "role": "executive",
     "phonenumber": "1111"
   }

@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { Card, Col, Row, Avatar, Tag, Button, Divider } from 'antd';
 import {
@@ -28,15 +29,22 @@ const ViewUser = () => {
     role: '',
     phonenumber: '',
   });
+  const [activeUser,setActiveUser]= React.useState(false);
   useEffect(() => {
     setData(userData);
-    setselectedUser(userList[0]);
+    setselectedUser(userData[0]);
   },[]);
  
 
   function onuserSelect(filterName: any) {
     let _selectedUser = userList.filter(item => item.firstname === filterName);
     setselectedUser(_selectedUser[0]);
+  }
+  function onHover(userInfo:any) {
+    userInfo.isActive?setActiveUser(true):setActiveUser(false)
+  }
+  function isactiveUser(selecteduser:any){
+    selecteduser.isActive?console.error('deactivating'):console.log('activating')
   }
   return (
     <div>
@@ -46,11 +54,10 @@ const ViewUser = () => {
           <Card type="inner">
             {
               userList.map((userInfo,index) =>
-                <span key={index} className={''} onClick={() => onuserSelect(userInfo.firstname)}>
+                <span key={index} className={'userCard'} onClick={() => onuserSelect(userInfo.firstname)} onMouseOver={()=>onHover(userInfo)}>
                   <b>{userInfo.firstname + ' ' + userInfo.lastname}</b>
                   <Tag color={tagColor[userInfo.role]}>{userInfo.role}</Tag>
-                  <br />
-                  <br />
+                 
                   <Divider />
                 </span>
               )}
@@ -68,6 +75,7 @@ const ViewUser = () => {
                 <p><PhoneOutlined /> {selecteduser.phonenumber}</p>
                 <p><MailOutlined /> {selecteduser.email}</p>
                 <p><FileAddOutlined /> {selecteduser.createdOn}</p>
+                <p>{selecteduser.isActive?<Button type="primary" danger onClick={()=>isactiveUser(selecteduser)}>Deactivate user</Button>:<Button type="primary" onClick={()=>isactiveUser(selecteduser)}>Reactivate user</Button>}</p>
               </div>
             </div>
           </Card>
@@ -78,3 +86,10 @@ const ViewUser = () => {
   )
 };
 export default ViewUser;
+
+{/*
+Todo:  
+1. Add filter to filter out active users and other users
+2. To provide dropdown at top of table 
+3. To activate and deactivate user with the value passed
+*/}
