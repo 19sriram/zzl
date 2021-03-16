@@ -1,30 +1,13 @@
-import { Card, Col, Row, Avatar, Tag, Button } from 'antd';
+import React, { useEffect } from 'react';
+import { Card, Col, Row, Avatar, Tag, Button, Divider } from 'antd';
 import {
   PhoneOutlined,
   MailOutlined,
   FileAddOutlined
 } from '@ant-design/icons';
+import {tagColor} from '../common/const';
+import {userData} from '../common/dummy';
 import './adduser.css';
-import React, { useEffect } from 'react';
-
-
-const userData = [{
-  firstname: "John",
-  "lastname": "Doe",
-  "email": "test@test.com",
-  "createdOn": "10/03/2021",
-  "isActive": true,
-  "role": "super admin"
-},
-{
-  firstname: "Jason",
-  "lastname": "Bourne",
-  "email": "test@test.com2",
-  "createdOn": "11/03/2021",
-  "isActive": false,
-  "role": "admin"
-}] as any;
-
 
 const ViewUser = () => {
   const [userList, setData] = React.useState([{
@@ -33,59 +16,61 @@ const ViewUser = () => {
     email: '',
     createdOn: '',
     isActive: '',
-    role: ''
+    role: '',
+    phonenumber: ''
   }]);
+  const [selecteduser, setselectedUser] = React.useState({
+    firstname: '',
+    lastname: '',
+    email: '',
+    createdOn: '',
+    isActive: '',
+    role: '',
+    phonenumber: '',
+  });
   useEffect(() => {
     setData(userData);
-  })
-  const roleColorMap: any = {
-    superadmin: "purple",
-    admin: "orange"
+    setselectedUser(userList[0]);
+  },[]);
+ 
+
+  function onuserSelect(filterName: any) {
+    let _selectedUser = userList.filter(item => item.firstname === filterName);
+    setselectedUser(_selectedUser[0]);
   }
-
-
   return (
     <div>
       <Row>
         <Col span={8}><Card title="Users List" extra={<a href="/">    <Button type="primary">New user</Button>
         </a>}>
-
           <Card type="inner">
             {
-
-              userList.map(item => {
-                <div>{item.firstname}</div>
-              })
-            }
-            {console.log(userList.map(item => item.firstname))}
-
-            {/* <span className={''}>
-              test
-              <b>{userInfo.firstname+userInfo.lastname}</b>
-              <Tag color={roleColorMap[userInfo.role]}>{}</Tag>
-              <br />
-              <span>CEO</span>
-            </span> */}
-
+              userList.map((userInfo,index) =>
+                <span key={index} className={''} onClick={() => onuserSelect(userInfo.firstname)}>
+                  <b>{userInfo.firstname + ' ' + userInfo.lastname}</b>
+                  <Tag color={tagColor[userInfo.role]}>{userInfo.role}</Tag>
+                  <br />
+                  <br />
+                  <Divider />
+                </span>
+              )}
           </Card>
-
         </Card>
         </Col>
 
         {/* RIGHT SIDE  */}
         <Col span={14}>
-
           <Card type="inner"  >
             <div>
-              <span className={'fontBig'}>John Doe</span><span><Tag color="purple">Super Admin</Tag></span>
+              <span className={'fontBig'}>{selecteduser.firstname + ' ' + selecteduser.lastname}</span><span><Tag color={tagColor[selecteduser.role]}>{selecteduser.role}</Tag>
+              </span>
               <div>
-                <p><PhoneOutlined /> 12345678900</p>
-                <p><MailOutlined /> test@test.com</p>
-                <p><FileAddOutlined /> 10/03/2020</p>
+                <p><PhoneOutlined /> {selecteduser.phonenumber}</p>
+                <p><MailOutlined /> {selecteduser.email}</p>
+                <p><FileAddOutlined /> {selecteduser.createdOn}</p>
               </div>
             </div>
           </Card>
-
         </Col>
       </Row>
 
