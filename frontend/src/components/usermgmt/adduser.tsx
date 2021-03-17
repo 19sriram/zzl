@@ -10,25 +10,23 @@ const layout = {
     wrapperCol: { offset: 8, span: 16 },
   };
   
-const AddUser = ()=>{
+const AddUser = (props:any)=>{
     const [form] = Form.useForm();
    
       const onFinish = (values: any) => {
         console.log(values);
+        props.isCreated();
       };
     
       const onReset = () => {
         form.resetFields();
+        props.isCancelled();
       };
     
      
     return (
         <>
-         <PageHeader
-    className="site-page-header"
-    title="New User"
-    subTitle="Create new user for your organization"
-  />
+         
         <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
         <Form.Item name={['user', 'firstName']} label="First Name" rules={[{ required: true, message: 'Please enter your first name' }]}>
           <Input />
@@ -59,7 +57,7 @@ const AddUser = ()=>{
             Create User
           </Button>
           <Button htmlType="button" onClick={onReset}>
-            Reset
+            Cancel
           </Button>
        
         </Form.Item>

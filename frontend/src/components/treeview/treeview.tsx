@@ -27,9 +27,7 @@ export const Treeview = ()=>{
 
     return (
         <Tree
-   
     defaultExpandAll
-    defaultSelectedKeys={['0-0-0']}
     treeData={treeData}
   />
     )

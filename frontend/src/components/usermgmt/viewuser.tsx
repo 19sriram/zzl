@@ -1,34 +1,18 @@
 
-import React, { useEffect } from 'react';
-import { Card, Col, Row, Avatar, Tag, Button, Divider } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Card, Col, Row, Avatar, Tag, Button, Divider, Modal, PageHeader } from 'antd';
 import {
   PhoneOutlined,
   MailOutlined,
   FileAddOutlined
 } from '@ant-design/icons';
-import {tagColor} from '../common/const';
+import {tagColor, UserInterface} from '../common/const';
 import {userData} from '../common/dummy';
 import './adduser.css';
-
+import AddUser from './adduser';
 const ViewUser = () => {
-  const [userList, setData] = React.useState([{
-    firstname: '',
-    lastname: '',
-    email: '',
-    createdOn: '',
-    isActive: '',
-    role: '',
-    phonenumber: ''
-  }]);
-  const [selecteduser, setselectedUser] = React.useState({
-    firstname: '',
-    lastname: '',
-    email: '',
-    createdOn: '',
-    isActive: '',
-    role: '',
-    phonenumber: '',
-  });
+  const [userList, setData] = React.useState([UserInterface]);
+  const [selecteduser, setselectedUser] = React.useState(UserInterface);
   const [activeUser,setActiveUser]= React.useState(false);
   useEffect(() => {
     setData(userData);
@@ -46,11 +30,28 @@ const ViewUser = () => {
   function isactiveUser(selecteduser:any){
     selecteduser.isActive?console.error('deactivating'):console.log('activating')
   }
+
+  //
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  //
   return (
     <div>
       <Row>
-        <Col span={8}><Card title="Users List" extra={<a href="/">    <Button type="primary">New user</Button>
-        </a>}>
+        <Col span={8}><Card title="Users List" extra={<><Button type="primary" onClick={showModal}>New user</Button></>
+        }>
           <Card type="inner">
             {
               userList.map((userInfo,index) =>
@@ -69,6 +70,8 @@ const ViewUser = () => {
         <Col span={14}>
           <Card type="inner"  >
             <div>
+            <Avatar size={40} style={{ color: '#f56a00', backgroundColor: '#fde3cf', fontSize: '1.5em' }}>{selecteduser.firstname.charAt(0)}</Avatar>
+
               <span className={'fontBig'}>{selecteduser.firstname + ' ' + selecteduser.lastname}</span><span><Tag color={tagColor[selecteduser.role]}>{selecteduser.role}</Tag>
               </span>
               <div>
@@ -81,7 +84,16 @@ const ViewUser = () => {
           </Card>
         </Col>
       </Row>
-
+<>
+<Modal title={<PageHeader
+    className="site-page-header"
+    title="New User"
+    subTitle="Create new user for your organization"
+   
+  />} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}  footer={null}>
+<AddUser isCreated={()=>setIsModalVisible(false)} isCancelled={()=>setIsModalVisible(false)}/>
+      </Modal>
+</>
     </div>
   )
 };

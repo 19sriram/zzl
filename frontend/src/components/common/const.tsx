@@ -4,3 +4,12 @@ export const tagColor:any= {
     manager: "green"
 };
 
+export const UserInterface:any = {
+    firstname: '',
+    lastname: '',
+    email: '',
+    createdOn: '',
+    isActive: '',
+    role: '',
+    phonenumber: ''
+}

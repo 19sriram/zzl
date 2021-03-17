@@ -8,7 +8,6 @@ import './layout.css';
 import { getUser } from '../api/api';
 import AddUser from '../usermgmt/adduser';
 import AddRole from '../rolemgmt/addrole';
-import Treeview from '../treeview/treeview';
 import ViewUser from '../usermgmt/viewuser';
 import TimeLine from '../timeline/timeline';
 import {
@@ -22,10 +21,9 @@ const LayoutWrapper = () => {
   const { Header, Content, Footer } = Layout;
   getUser();
   const menu = (<Menu mode="horizontal" >
-    <Menu.Item key="1"><Link to="/">Add Users</Link></Menu.Item>
-    <Menu.Item key="2"><Link to="/roles">Add Roles</Link></Menu.Item>
-    <Menu.Item key="3"><Link to="/hierarchy">Hierarchy</Link></Menu.Item>
-    <Menu.Item key="4"><Link to="/viewuser">View User</Link></Menu.Item>
+    {/* <Menu.Item key="1"><Link to="/">Add Users</Link></Menu.Item> */}
+    <Menu.Item key="2"><Link to="/roles">Manage Roles</Link></Menu.Item>
+    <Menu.Item key="4"><Link to="/viewuser">Manage Users</Link></Menu.Item>
   </Menu>);
   return (
     <>
@@ -46,14 +44,13 @@ const LayoutWrapper = () => {
            
             <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
               <Switch>
-                <Route path="/hierarchy">
-                  <Treeview />
-                </Route>
+              
                 <Route path="/roles">
                   <AddRole />
                 </Route>
                 <Route path="/viewuser">
                   <ViewUser />
+                
                 </Route>
                 <Route path="/timeline">
                   <TimeLine />

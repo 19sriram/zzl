@@ -1,6 +1,7 @@
 // User adds new user to the system
-import { Form, Input, Button, Select, PageHeader } from 'antd';
-import { useEffect } from 'react';
+import { Form, Input, Button, Select, PageHeader, Modal,  } from 'antd';
+import { useEffect, useState } from 'react';
+import {Treeview} from '../treeview/treeview';
 import './addrole.css';
 const { Option } = Select;
 const layout = {
@@ -22,12 +23,31 @@ const AddRole = ()=>{
         form.resetFields();
       };
   
+       //
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  //
+
     return (
         <>
          <PageHeader
     className="site-page-header"
     title="New Role"
-    subTitle="Create new role for your organization"
+    subTitle={<span className="goRight"><Button type="ghost"  htmlType="submit" className={"createRole"} onClick={showModal}>
+    View Existing Roles
+  </Button></span>}
   />
         <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
         <Form.Item name={['role', 'roleName']} label="Role Name" rules={[{ required: true, message: 'Please enter your first name' }]}>
@@ -52,6 +72,14 @@ const AddRole = ()=>{
        
         </Form.Item>
       </Form>
+      <Modal title={<PageHeader
+    className="site-page-header"
+    title="Existing Roles"
+    
+   
+  />} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}  footer={null}>
+<Treeview />
+      </Modal>
       </>
     )
 }
