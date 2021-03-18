@@ -26,7 +26,6 @@ export async function getUser() {
 // Add user
 export async function addUser(userInfo) {
   let userData = {...userInfo,...dummy};
-  console.log(userData);
   let response = await axios.post(baseURL + userFragment + _adduser,userData,options);
   if (response.data.result==='Success') {
     return response.data;
@@ -38,10 +37,9 @@ export async function addUser(userInfo) {
 // Delete user
 export async function deleteUser(userInfo) {
   let userData = {email:userInfo}
-  console.log(userData);
   let response = await axios.post(baseURL + userFragment + _deleteuser,userData,options);
   if (!response.ok) {
-    console.error('Errorrr');
+    console.error('Error');
   }
   if (response) {
     return response.data.data;

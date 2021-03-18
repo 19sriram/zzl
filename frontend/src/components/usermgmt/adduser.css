@@ -13,4 +13,7 @@
     cursor: pointer;
     padding: 30px 0px;
   }
- 
+ .userCard span {
+   margin-left: 1.3em;
+   float: right;
+ }
