@@ -16,7 +16,6 @@ const userSchema = mongoose.Schema({
     createdByRole:String,
     createdByName:String,
     createdOn:String,
-    phonenumber:String,
   });
 
 const model = mongoose.model('users', userSchema);
@@ -35,14 +34,35 @@ const saveuserdetails = async(data) => {
 const viewuserdetails = async(data) => {
     try {
 
-        var query={};
+        var query=[];
+        var users;
 
          if(data.email)
          {
-             query=data;
+             query.push({$match:{"email":data.email}});
          }
-         query.isActive=true;
-         const users = await model.find(query);
+         if(data.status)
+         {
+             query.push({$match:{"status":data.status}});
+         }
+         if(data.size)
+         {
+             query.push({$match:{"isActive":true}});
+             query.push({$skip:0});
+             query.push({$limit:parseInt(data.size)});
+
+             users = await model.aggregate([
+                query
+            ]);
+
+         }
+         else
+         {
+            query.push({$match:{"isActive":true}});
+            users = await model.aggregate([
+                query
+            ]);
+        }
 
          return users;
     } catch(err) {
@@ -77,7 +97,6 @@ const updateuserdetails = async(data) => {
             {$set: {"firstname":data.firstname,
                     "lastname":data.lastname,
                     "role":data.role,
-                    "phonenumber": data.phonenumber,
                     "group":data.group,
                     "profile":data.profile,
                     "createdByName":data.createdByName,

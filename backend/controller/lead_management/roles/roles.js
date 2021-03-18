@@ -1,7 +1,7 @@
 'use strict';
 
 const httpErrors = require('http-errors');
-const roles = require('../roles/service');
+const roles = require('./service');
 const bcrypt = require('bcrypt');
 
 

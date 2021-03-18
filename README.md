@@ -11,3 +11,8 @@ zzl is a CRM to manage leads and status of it which comes along with access mana
 2. Create and mark a pull request for approval first. Without comments we can't outgrow eachother
 3. Learn to make solutions simpler. KISS is the mantra (Keep It Simple Stupid!)
 
+## Plans
+
+1. usermanagement and rolemanagement
+2. Login and leadmanagement
+3. 

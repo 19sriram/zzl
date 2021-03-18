@@ -19,6 +19,7 @@ require('./config/errorHandler')(app);
 require('./config/passport');
 
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
     console.log(chalk.green(`Server listening on port: ${PORT}`), chalk.yellow(' -- \u2708'));
 });

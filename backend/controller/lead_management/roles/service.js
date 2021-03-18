@@ -33,10 +33,6 @@ const viewroledetails = async(data) => {
       
         var query={};
 
-         if(data.email)
-         {
-             query=data;
-         }
          if(data.role)
          {
              query=data;
@@ -57,13 +53,13 @@ const viewroletreedetails = async(data) => {
      
         var query={};
 
-         if(data.role==='null')
+         if(data.role)
          {
-             query.reportingTo="";
+            query.reportingTo=data.role; 
          }
          else
          {
-            query.reportingTo=data.role;   
+            query.reportingTo=""; 
          }
          query.isActive=true;
          const roles = await model.find(query)
