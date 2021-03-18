@@ -7,13 +7,13 @@ const JWT = require('jsonwebtoken');
 
 
 
-const addUser = async (req, res) => {
+const adduser = async (req, res) => {
     try {
 
         const checkExists = await users.viewuserdetails({email:req.body.email})
 
         if(checkExists.length!=0){
-            res.send({ status: 200, result: "Failure", message: 'User Already Exists!'}); 
+            res.send({ status: 400, result: "Failure", message: 'User Already Exists!'}); 
             return false           
         }
          
@@ -39,7 +39,7 @@ const addUser = async (req, res) => {
     }
 };
 
-const viewUser = async (req, res) => {
+const viewuser = async (req, res) => {
     try {
 
         const viewuser = await users.viewuserdetails(req.query)
@@ -47,7 +47,7 @@ const viewUser = async (req, res) => {
             res.send({ status: 200, result: 'Success', data:viewuser});
         }
         else{
-            res.send({ status: 200, result: 'Failure', message:"Data Not Found"});
+            res.send({ status: 400, result: 'Failure', message:"Data Not Found"});
         }
 
     } catch(err) {
@@ -55,11 +55,11 @@ const viewUser = async (req, res) => {
     }
 };
 
-const deleteUser = async (req, res) => {
+const deleteuser = async (req, res) => {
     try {
         const checkExists = await users.viewuserdetails({email:req.body.email})
         if(checkExists.length===0){
-            res.send({ status: 200, result: "Failure", message: 'User Not Found!'}); 
+            res.send({ status: 400, result: "Failure", message: 'User Not Found!'}); 
             return false           
         }
         const deleteuser = await users.deleteuserdetails(req.body)
@@ -76,11 +76,11 @@ const deleteUser = async (req, res) => {
 };
 
 
-const updateUser = async (req, res) => {
+const updateuser = async (req, res) => {
     try {
         const checkExists = await users.viewuserdetails({email:req.body.email})
         if(checkExists.length===0){
-            res.send({ status: 200, result: "Failure", message: 'User Not Found!'}); 
+            res.send({ status: 400, result: "Failure", message: 'User Not Found!'}); 
             return false           
         }
         const updateuser = await users.updateuserdetails(req.body)
@@ -96,11 +96,11 @@ const updateUser = async (req, res) => {
     }
 };
 
-const updatePassword = async (req, res) => {
+const updatepassword = async (req, res) => {
     try {
         const checkExists = await users.viewuserdetails({email:req.body.email})
         if(checkExists.length===0){
-            res.send({ status: 200, result: "Failure", message: 'User Not Found!'}); 
+            res.send({ status: 400, result: "Failure", message: 'User Not Found!'}); 
             return false           
         }
 
@@ -121,25 +121,24 @@ const updatePassword = async (req, res) => {
     }
 };
 
-const userLogin = async (req, res) => {
+const userlogin = async (req, res) => {
     try {
 
-        console.log("hai")
         const getUser = await users.viewuserdetails({email:req.body.email});
-        console.log("hai1")
+
         if(getUser.length === 0)
         {
-            res.send({ status: 200, result: "Failure", message: 'User Not Found!'}); 
+            res.send({ status: 400, result: "Failure", message: 'User Not Found!'}); 
             return false 
         }
-        console.log("hai2",getUser)
+     
         const match = await bcrypt.compare(req.body.password, getUser[0].password);
-        console.log("hai3")
+    
         if (match) { 
-            const token = JWT.sign({  id: getUser[0].id,role:getUser[0].role }, process.env.JWT_SECRET_KEY);
+            const token = JWT.sign({ id: getUser[0].id,role:getUser[0].role }, process.env.JWT_SECRET_KEY);
             res.send({ status: 200, result:"Success" ,message: "LoggedIn Successfully!", accessToken: token });
         } else { 
-            res.send({ status: 200, result:"Failure", message: "Incorrect Password!" });
+            res.send({ status: 400, result:"Failure", message: "Incorrect Password!" });
         }
 
     } catch(err) {
@@ -148,11 +147,11 @@ const userLogin = async (req, res) => {
 };
 
 module.exports = {
-     addUser,
-     viewUser,
-     deleteUser,
-     updateUser,
-     updatePassword,
-     userLogin
+     adduser,
+     viewuser,
+     deleteuser,
+     updateuser,
+     updatepassword,
+     userlogin
 
 };

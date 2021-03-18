@@ -5,13 +5,13 @@ const roles = require('../roles/service');
 const bcrypt = require('bcrypt');
 
 
-const addRole = async (req, res) => {
+const addrole = async (req, res) => {
     try {
 
         const checkExists = await roles.viewroledetails({role:req.body.role})
-
+    
         if(checkExists.length!=0){
-            res.send({ status: 200, result: "Failure", message: 'Role Already Exists!'}); 
+            res.send({ status: 400, result: "Failure", message: 'Role Already Exists!'}); 
             return false           
         }
 
@@ -31,7 +31,7 @@ const addRole = async (req, res) => {
     }
 };
 
-const viewRole = async (req, res) => {
+const viewrole = async (req, res) => {
     try {
 
         const viewrole = await roles.viewroledetails(req.query);
@@ -39,7 +39,7 @@ const viewRole = async (req, res) => {
             res.send({ status: 200, result: 'Success', data:viewrole});
         }
         else{
-            res.send({ status: 200, result: 'Failure', message:"Data Not Found"});
+            res.send({ status: 400, result: 'Failure', message:"Data Not Found"});
         }
 
     } catch(err) {
@@ -48,11 +48,11 @@ const viewRole = async (req, res) => {
 };
 
 
-const updateRole = async (req, res) => {
+const updaterole = async (req, res) => {
     try {
         const checkExists = await roles.viewroledetails({role:req.body.role})
         if(checkExists.length===0){
-            res.send({ status: 200, result: "Failure", message: 'Role Not Found!'}); 
+            res.send({ status: 400, result: "Failure", message: 'Role Not Found!'}); 
             return false           
         }
         const updaterole = await roles.updateroledetails(req.body)
@@ -68,9 +68,26 @@ const updateRole = async (req, res) => {
     }
 };
 
+const getroletree = async (req, res) => {
+    try {
+
+        const viewrole = await roles.viewroletreedetails(req.query);
+        if(viewrole.length!=0){
+            res.send({ status: 200, result: 'Success', data:viewrole});
+        }
+        else{
+            res.send({ status: 400, result: 'Failure', message:"Data Not Found"});
+        }
+
+    } catch(err) {
+        res.send({ status: 400, result:'Failure', message: 'Some Thing Went Wrong!'}); 
+    }
+};
+
 module.exports = {
-     addRole,
-     viewRole,
-     updateRole,
+     addrole,
+     viewrole,
+     updaterole,
+     getroletree
 
 };

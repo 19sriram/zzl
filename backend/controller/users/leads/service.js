@@ -3,22 +3,34 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 
-const roleSchema = mongoose.Schema({
-    role: String,
-    reportingTo: String,
-    shareDateToPears: Boolean,
-    description: String,
+const leadSchema = mongoose.Schema({
+    leadOwner: String,
+    company: String,
+    firstName: String,
+    lastName: String,
+    title: String,
+    email: String,
+    phone: String,
+    fax: String,
+    mobile: String,
+    website: String,
+    leadSource: String,
+    leadStatus: String,
+    industry: String,
+    employeeCount: String,
+    annualRevenue: String,
+    rating: String,
     isActive:Boolean,
     createdById:String,
-    createdByRole:String,
+    createdBylead:String,
     createdByName:String,
     createdOn:String,
   });
 
-const model = mongoose.model('roles', roleSchema);
+const model = mongoose.model('leads', leadSchema);
 
 
-const saveroledetails = async(data) => {
+const saveleaddetails = async(data) => {
     try {
         const user = new model(data);
         const savedata = await user.save();
@@ -28,7 +40,7 @@ const saveroledetails = async(data) => {
     }
 };
 
-const viewroledetails = async(data) => {
+const viewleaddetails = async(data) => {
     try {
       
         var query={};
@@ -37,13 +49,9 @@ const viewroledetails = async(data) => {
          {
              query=data;
          }
-         if(data.role)
-         {
-             query=data;
-         }
          query.isActive=true;
-         const roles = await model.find(query)
-         return roles;
+         const leads = await model.find(query)
+         return leads;
          
     } catch(err) {
 
@@ -52,44 +60,44 @@ const viewroledetails = async(data) => {
     }
 };
 
-const viewroletreedetails = async(data) => {
+const viewleadtreedetails = async(data) => {
     try {
      
         var query={};
 
-         if(data.role==='null')
+         if(data.lead==='null')
          {
              query.reportingTo="";
          }
          else
          {
-            query.reportingTo=data.role;   
+            query.reportingTo=data.lead;   
          }
          query.isActive=true;
-         const roles = await model.find(query)
-         return roles;
+         const leads = await model.find(query)
+         return leads;
     } catch(err) {
         return false
     }
 };
 
-const updateroledetails = async(data) => {
+const updateleaddetails = async(data) => {
     try {
         console.log("hai1")
-         const roles = await model.updateMany(
-            {"role" : data.role},
-            {$set: {"role":data.role,
+         const leads = await model.updateMany(
+            {"lead" : data.lead},
+            {$set: {"lead":data.lead,
                     "reportingTo":data.reportingTo,
                     "description":data.description,
                     "createdByName":data.createdByName,
-                    "createdByRole":data.createdByRole,
+                    "createdBylead":data.createdBylead,
                     "createdById":data.createdById,
                     "isActive" : true,
                     "createdOn": new Date()}},
             {new : true}
         );
 
-         return roles;
+         return leads;
     } catch(err) {
 
         console.log("hai")
@@ -98,8 +106,8 @@ const updateroledetails = async(data) => {
 };
 
 module.exports = { 
-    saveroledetails,
-    viewroledetails,
-    updateroledetails,
-    viewroletreedetails
+    saveleaddetails,
+    viewleaddetails,
+    updateleaddetails,
+    viewleadtreedetails
  };
