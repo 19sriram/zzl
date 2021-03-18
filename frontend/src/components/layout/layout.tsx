@@ -10,6 +10,7 @@ import AddUser from '../usermgmt/adduser';
 import AddRole from '../rolemgmt/addrole';
 import ViewUser from '../usermgmt/viewuser';
 import TimeLine from '../timeline/timeline';
+import Loginn from '../login/login';
 import {
   BrowserRouter as Router,
   Switch,
@@ -21,7 +22,7 @@ const LayoutWrapper = () => {
   const { Header, Content, Footer } = Layout;
   getUser();
   const menu = (<Menu mode="horizontal" >
-    {/* <Menu.Item key="1"><Link to="/">Add Users</Link></Menu.Item> */}
+    <Menu.Item key="1"><Link to="/">Login</Link></Menu.Item>
     <Menu.Item key="2"><Link to="/roles">Manage Roles</Link></Menu.Item>
     <Menu.Item key="4"><Link to="/viewuser">Manage Users</Link></Menu.Item>
   </Menu>);
@@ -56,7 +57,7 @@ const LayoutWrapper = () => {
                   <TimeLine />
                 </Route>
                 <Route path="/">
-                  <AddUser />
+                  <Loginn />
                 </Route>
               </Switch>
             </div>

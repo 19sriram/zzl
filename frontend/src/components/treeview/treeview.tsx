@@ -1,6 +1,12 @@
 
 import {Tree} from 'antd';
-export const Treeview = ()=>{
+import { useEffect } from 'react';
+
+
+export const Treeview = (props:any)=>{
+  useEffect(()=>{
+    console.log(props.data)
+  },[]);
     // sample data
     const treeData = [
         {
