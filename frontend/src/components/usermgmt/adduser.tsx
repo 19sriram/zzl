@@ -1,47 +1,55 @@
 // User adds new user to the system
-import { Form, Input, Button, Select, PageHeader } from 'antd';
+import { Form, Input, Button, Select, PageHeader, message } from 'antd';
+import { addUser } from '../api/api';
 import './adduser.css';
 const { Option } = Select;
 const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 16 },
-  };
-  const tailLayout = {
-    wrapperCol: { offset: 8, span: 16 },
-  };
-  
-const AddUser = (props:any)=>{
-    const [form] = Form.useForm();
-   
-      const onFinish = (values: any) => {
-        console.log(values);
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+};
+
+const AddUser = (props: any) => {
+  const [form] = Form.useForm();
+
+  const onFinish = (values: any) => {
+    addUser(values.user).then(response => {
+      if (response.result == 'Success') {
+        props.getUserInfo();
         props.isCreated();
-      };
-    
-      const onReset = () => {
-        form.resetFields();
-        props.isCancelled();
-      };
-    
-     
-    return (
-        <>
-         
-        <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
-        <Form.Item name={['user', 'firstName']} label="First Name" rules={[{ required: true, message: 'Please enter your first name' }]}>
+      } else {
+        message.error(response.message);
+      }
+    });
+
+  };
+
+  const onReset = () => {
+    form.resetFields();
+    props.isCancelled();
+  };
+
+
+  return (
+    <>
+
+      <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
+        <Form.Item name={['user', 'firstname']} label="First Name" rules={[{ required: true, message: 'Please enter your first name' }]}>
           <Input />
         </Form.Item>
-        <Form.Item name={['user', 'lastName']} label="Last Name" rules={[{ required: true, message: 'Please enter your last name' }]}>
+        <Form.Item name={['user', 'lastname']} label="Last Name" rules={[{ required: true, message: 'Please enter your last name' }]}>
           <Input />
         </Form.Item>
-        <Form.Item name={['user', 'userPhonenumber']} label="Phone Number" rules={[{ required: true, message: 'Please enter your phone number' }]}>
+        <Form.Item name={['user', 'phonenumber']} label="Phone Number" rules={[{ required: true, message: 'Please enter your phone number' }]}>
           <Input />
         </Form.Item>
-        <Form.Item name={['user', 'userEmail']} label="Email" rules={[{ required: true, type: 'email', message: 'Please enter your email address'  }]}>
+        <Form.Item name={['user', 'email']} label="Email" rules={[{ required: true, type: 'email', message: 'Please enter your email address' }]}>
           <Input />
         </Form.Item>
-        
-        <Form.Item name={['user', 'userRole']} label="Role" rules={[{ required: true, message: 'Please select a role' }]}>
+
+        <Form.Item name={['user', 'role']} label="Role" rules={[{ required: true, message: 'Please select a role' }]}>
           <Select
             placeholder="Select a role"
             allowClear
@@ -51,7 +59,7 @@ const AddUser = (props:any)=>{
             <Option value="executive">Executive</Option>
           </Select>
         </Form.Item>
-        
+
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit" className={"createUser"}>
             Create User
@@ -59,11 +67,11 @@ const AddUser = (props:any)=>{
           <Button htmlType="button" onClick={onReset}>
             Cancel
           </Button>
-       
+
         </Form.Item>
       </Form>
-      </>
-    )
+    </>
+  )
 }
 
 export default AddUser;
