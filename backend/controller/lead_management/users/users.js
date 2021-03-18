@@ -41,7 +41,6 @@ const adduser = async (req, res) => {
 
 const viewuser = async (req, res) => {
     try {
-
         const viewuser = await users.viewuserdetails(req.query)
         if(viewuser.length!=0){
             res.send({ status: 200, result: 'Success', data:viewuser});
