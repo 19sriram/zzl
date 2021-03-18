@@ -16,6 +16,7 @@ const userSchema = mongoose.Schema({
     createdByRole:String,
     createdByName:String,
     createdOn:String,
+    phonenumber:String,
   });
 
 const model = mongoose.model('users', userSchema);
@@ -76,6 +77,7 @@ const updateuserdetails = async(data) => {
             {$set: {"firstname":data.firstname,
                     "lastname":data.lastname,
                     "role":data.role,
+                    "phonenumber": data.phonenumber,
                     "group":data.group,
                     "profile":data.profile,
                     "createdByName":data.createdByName,

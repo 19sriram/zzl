@@ -7,4 +7,11 @@
   }
   .site-layout .site-layout-background {
     background: #fff;
+    height: 85vh
+  }
+  .goRight {
+    float: right;
+  }
+  .ant-dropdown-menu  {
+    padding:  10px 20px;
   }

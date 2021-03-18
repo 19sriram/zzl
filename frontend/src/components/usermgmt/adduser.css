@@ -1,3 +1,19 @@
 .createUser {
     margin-right: 8px;
   }
+
+  .fontBig {
+    font-size: 3em;
+    vertical-align: middle;
+    margin: 0px 10px;
+
+  }
+
+  .userCard {
+    cursor: pointer;
+    padding: 30px 0px;
+  }
+ .userCard span {
+   margin-left: 1.3em;
+   float: right;
+ }
