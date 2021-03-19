@@ -15,10 +15,11 @@ const AddUser = (props: any) => {
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
-    addUser(values.user).then(response => {
+    addUser(values.user).then((response)=> {
       if (response.result == 'Success') {
         props.getUserInfo();
         props.isCreated();
+        message.success('User created successfully');
       } else {
         message.error(response.message);
       }

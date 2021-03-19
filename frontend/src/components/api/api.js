@@ -7,6 +7,9 @@ let _viewuser = 'viewuser';
 let _adduser = 'adduser';
 let _deleteuser = 'deleteuser';
 
+let _viewrole = 'viewrole';
+let _addrole = 'addrole';
+
 const options = {
   headers: {'Content-Type': 'application/json'}
 };
@@ -45,3 +48,33 @@ export async function deleteUser(userInfo) {
     return response.data.data;
   }
 }
+
+{/* ---   ROLES   --- */}
+// get roles
+export async function getRoles(){
+  let response = await axios.get(baseURL+ userFragment+_viewrole);
+  if (!response.ok) {
+    console.error('Error');
+  }
+  if (response) {
+    return response.data.data;
+  }
+}
+//add roles
+export async function addRole(userInfo){
+  let userData={"role":userInfo.role,"reportingTo":userInfo.reportingTo}
+  let response = await axios.post(baseURL+ userFragment+_addrole,userData,options);
+  if(response.status==='200') {
+    console.log('200')
+    return response.data
+  } else {
+    console.log('not 200')
+    return response
+  }
+}
+
+{/** 
+TODO:
+1. Check the role added with status message and rewrite with status code
+
+*/ }
