@@ -32,13 +32,21 @@ const viewroledetails = async(data) => {
     try {
       
         var query={};
+        var roles;
 
          if(data.role)
          {
              query=data;
+             query.isActive=true;
+             roles = await model.find(query).collation( { locale: 'en', strength: 2 } );
          }
-         query.isActive=true;
-         const roles = await model.find(query)
+         else
+         {
+            query.isActive=true;
+            roles = await model.find(query);
+
+         }
+       
          return roles;
          
     } catch(err) {
