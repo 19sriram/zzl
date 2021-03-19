@@ -75,7 +75,7 @@ const ViewUser = () => {
     <div>
       <Row>
         <Col span={14}><Card title="Users List" extra={<>
-        
+        <span style={{marginRight: '10px'}}>Total: {userList.length}</span>
           <Select placeholder="Select user type" defaultValue={'all'} style={{minWidth: '150px'}} onSelect={(values)=>onuserFilterChange(values)}>
 
          
