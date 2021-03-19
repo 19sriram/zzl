@@ -13,3 +13,10 @@ export const UserInterface:any = {
     role: '',
     phonenumber: ''
 }
+
+export const userTypes:any = {
+    activeusers: 'Active Users',
+    inactiveusers: 'Inactive Users',
+    all: 'All',
+    deletedusers:'Deleted Users'
+}

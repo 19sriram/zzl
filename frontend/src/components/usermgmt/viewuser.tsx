@@ -1,18 +1,21 @@
 
 import React, { useEffect, useState } from 'react';
-import { Card, Col, Row, Avatar, Tag, Button, Divider, Modal, PageHeader } from 'antd';
+import { Card, Col, Row, Avatar, Tag, Button, Divider, Modal, PageHeader, Input, Select } from 'antd';
 import {
   PhoneOutlined,
   MailOutlined,
   FileAddOutlined
 } from '@ant-design/icons';
-import {tagColor, UserInterface} from '../common/const';
+import {tagColor, UserInterface, userTypes} from '../common/const';
 import {userData} from '../common/dummy';
 import './adduser.css';
 import AddUser from './adduser';
-import { getUser, deleteUser } from '../api/api';
+import { getUser, deleteUser, } from '../api/api';
+const { Search } = Input;
+const { Option } = Select;
 
 const ViewUser = () => {
+  
   const [userList, setData] = React.useState([UserInterface]);
   const [selecteduser, setselectedUser] = React.useState(UserInterface);
   const [activeUser,setActiveUser]= React.useState(false);
@@ -27,6 +30,8 @@ const ViewUser = () => {
   });
   
  }
+ // search user 
+ const onSearch = (value: any) => console.log(value);
 
   function onuserSelect(filterName: any) {
     let _selectedUser = userList.filter((item:any) => item.firstname === filterName);
@@ -46,6 +51,10 @@ const ViewUser = () => {
 
   }
 
+  // on user select filter dropdown
+  const onuserFilterChange = (values:any)=>{
+    console.log(values);
+  }
   //
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -65,9 +74,22 @@ const ViewUser = () => {
   return (
     <div>
       <Row>
-        <Col span={8}><Card title="Users List" extra={<><Button type="primary" onClick={showModal}>New user</Button></>
+        <Col span={14}><Card title="Users List" extra={<>
+        
+          <Select placeholder="Select user type" defaultValue={'all'} style={{minWidth: '150px'}} onSelect={(values)=>onuserFilterChange(values)}>
+
+         
+              <Option value="all">All</Option>
+              <Option value="activeuser">Active User</Option>
+              <Option value="inactiveuser">Inactive User</Option>
+              <Option value="deleteduser">Deleted User</Option>
+            </Select>
+        <Search placeholder="Search user" onSearch={onSearch} 
+        style={{ width: 150,marginRight: '1em' }} />
+   
+        <Button type="primary" onClick={showModal}>New user</Button></>
         }>
-          <Card type="inner">
+          <Card type="inner" id="userCardBody">
             { 
               userList.map((userInfo: { firstname: string; lastname: string; role: any },index: React.Key | null | undefined) =>
                 <span key={index} className={'userCard'} onClick={() => onuserSelect(userInfo.firstname)} onMouseOver={()=>onHover(userInfo)}>
@@ -82,8 +104,8 @@ const ViewUser = () => {
         </Col>
 
         {/* RIGHT SIDE  */}
-        <Col span={14}>
-          <Card type="inner"  >
+        <Col span={10}>
+          <Card type="inner" >
             <div>
             <Avatar size={40} style={{ color: '#f56a00', backgroundColor: '#fde3cf', fontSize: '1.5em' }}>{(selecteduser.firstname).toUpperCase().charAt(0)}</Avatar>
 
@@ -116,6 +138,7 @@ export default ViewUser;
 
 {/*
 Todo:  
-1. Add filter to filter out active users and other users
-2. To provide dropdown at top of table 
+1. integrate backend for the table api filter, search
+2. To check for delete option in user and deactivate option
+3. sending only email with options deletes other values
 */}
