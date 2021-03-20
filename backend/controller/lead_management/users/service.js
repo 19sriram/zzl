@@ -9,6 +9,7 @@ const userSchema = mongoose.Schema({
     lastname: String,
     password: String,
     email: String,
+    mobile:String,
     role: String,
     group: String,
     profile: String,
@@ -101,8 +102,6 @@ const deleteuserdetails = async(data) => {
 
          return users;
     } catch(err) {
-
-        console.log("hai")
         return false
     }
 };
@@ -116,6 +115,7 @@ const updateuserdetails = async(data) => {
                     "lastname":data.lastname,
                     "role":data.role,
                     "group":data.group,
+                    "mobile":data.mobile,
                     "profile":data.profile,
                     "createdByName":data.createdByName,
                     "createdByRole":data.createdByRole,
