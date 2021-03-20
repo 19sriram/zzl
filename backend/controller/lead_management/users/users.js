@@ -56,6 +56,21 @@ const viewuser = async (req, res) => {
     }
 };
 
+const searchuser = async (req, res) => {
+    try {
+        const searchuser = await users.searchuserdetails(req.query)
+        if(searchuser.length!=0){
+            res.send({ status: 200, result: 'Success', data:searchuser});
+        }
+        else{
+            res.send({ status: 400, result: 'Failure', message:"Data Not Found"});
+        }
+
+    } catch(err) {
+        res.send({ status: 400, result:'Failure', message: 'Some Thing Went Wrong!'}); 
+    }
+};
+
 const deleteuser = async (req, res) => {
     try {
         const checkExists = await users.viewuserdetails({email:req.body.email})
@@ -174,7 +189,8 @@ module.exports = {
      updateuser,
      updatepassword,
      userlogin,
-     updateactivestatus
+     updateactivestatus,
+     searchuser
      
 
 };

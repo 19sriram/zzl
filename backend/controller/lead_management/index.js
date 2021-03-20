@@ -8,6 +8,7 @@ const lead = require('./leads/leads');
 
 router.post('/adduser',user.adduser);
 router.get('/viewuser',user.viewuser);
+router.get('/searchuser',user.searchuser);
 router.post('/deleteuser',user.deleteuser);
 router.post('/updateuser',user.updateuser);
 router.post('/updateactivestatus',user.updateactivestatus);

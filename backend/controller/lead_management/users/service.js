@@ -72,6 +72,24 @@ const viewuserdetails = async(data) => {
     }
 };
 
+const searchuserdetails = async(data) => {
+    try {
+
+        var users = await model.aggregate([
+
+          {  $match: { $or: [{ firstname: data.data }, { lastname: data.data },{ email: data.data },{ mobile: data.data }] }}
+              
+        ]);
+        
+        console.log(users)
+
+         return users;
+    } catch(err) {
+        return false
+    }
+};
+
+
 const deleteuserdetails = async(data) => {
     try {
   
@@ -159,5 +177,6 @@ module.exports = {
     deleteuserdetails,
     updateuserdetails,
     updatepassworddetails,
-    updateactivestatus
+    updateactivestatus,
+    searchuserdetails
  };
