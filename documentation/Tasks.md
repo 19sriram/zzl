@@ -30,5 +30,12 @@ Executive              - Restricted permission level 3
 3. Custom Roles - CEO / Ghost Role can create custom roles as per requirement and screen will have restriction levels mentioned for selection
 
 
-# FIRST LINE ISSUE
-   Connecting frontend to backend and test the code
+# ARCHITECTURE
+
+1. Default roles - Licensingpartner(Lpartner), CEO, Admin, Executive, Manager
+
+2. LicensingPartner not to show in system - So filter from backend itself.
+
+3. Front End will show only Admin, CEO, Manager  when selected from "reporting to" dropdown and won't show "Executive". FrontEnd will filter the Executive role
+
+
