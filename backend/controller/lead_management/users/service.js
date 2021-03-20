@@ -12,6 +12,7 @@ const userSchema = mongoose.Schema({
     group: String,
     profile: String,
     isActive:Boolean,
+    status:String,
     createdById:String,
     createdByRole:String,
     createdByName:String,

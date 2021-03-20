@@ -20,6 +20,7 @@ const adduser = async (req, res) => {
         var password = 'Admin@123';
         req.body.createdOn = '';
         req.body.isActive = true;
+        req.body.status = 'true';
         req.body.createdOn = new Date();
 
         const salt = await bcrypt.genSalt(10);
