@@ -34,8 +34,8 @@ Executive              - Restricted permission level 3
 
 1. Default roles - Licensingpartner(Lpartner), CEO, Admin, Executive, Manager
 
-2. LicensingPartner not to show in system
+2. LicensingPartner not to show in system - So filter from backend itself.
 
-3. Front End will show only Admin, CEO, Manager  when selected from "reporting to" dropdown and won't show "Executive"
+3. Front End will show only Admin, CEO, Manager  when selected from "reporting to" dropdown and won't show "Executive". FrontEnd will filter the Executive role
 
 
