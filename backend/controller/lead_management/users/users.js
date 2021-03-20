@@ -20,9 +20,10 @@ const adduser = async (req, res) => {
         var password = 'Admin@123';
         req.body.createdOn = '';
         req.body.isActive = true;
-        req.body.status = 'true';
-        req.body.createdOn = new Date();
-
+        req.body.status = true;
+        var date = new Date();
+        req.body.createdOn=date.toISOString().slice(0,10)
+      
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         req.body.password = hashedPassword;
@@ -96,6 +97,26 @@ const updateuser = async (req, res) => {
     }
 };
 
+const updateactivestatus = async (req, res) => {
+    try {
+        const checkExists = await users.viewuserdetails({email:req.body.email})
+        if(checkExists.length===0){
+            res.send({ status: 400, result: "Failure", message: 'User Not Found!'}); 
+            return false           
+        }
+        const updateactivestatus = await users.updateactivestatus(req.body)
+        if(updateactivestatus){
+            res.send({ status: 200, result: "Success", message: 'Status Updated Successfully!'});
+        }
+        else{
+            res.send({ status: 400, result: "Failure", Message: 'Some Thing Went Wrong!'});
+        }
+
+    } catch(err) {
+        res.send({ status: 400, msg: 'Some Thing Went Wrong!'}); 
+    }
+};
+
 const updatepassword = async (req, res) => {
     try {
         const checkExists = await users.viewuserdetails({email:req.body.email})
@@ -152,6 +173,8 @@ module.exports = {
      deleteuser,
      updateuser,
      updatepassword,
-     userlogin
+     userlogin,
+     updateactivestatus
+     
 
 };

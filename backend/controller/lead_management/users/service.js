@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
+const { json } = require('body-parser');
 
 const userSchema = mongoose.Schema({
     firstname: String,
@@ -12,7 +13,7 @@ const userSchema = mongoose.Schema({
     group: String,
     profile: String,
     isActive:Boolean,
-    status:String,
+    status:Boolean,
     createdById:String,
     createdByRole:String,
     createdByName:String,
@@ -42,24 +43,24 @@ const viewuserdetails = async(data) => {
          {
              query.push({$match:{"email":data.email}});
          }
-         if(data.status)
+         if(data.isActive)
          {
-             query.push({$match:{"status":data.status}});
+            query.push({$match:{"isActive":JSON.parse(data.isActive)}});
          }
          if(data.size)
          {
-             query.push({$match:{"isActive":true}});
-             query.push({$skip:0});
-             query.push({$limit:parseInt(data.size)});
+            query.push({$match:{"status":true}});
+            query.push({$skip:0});
+            query.push({$limit:parseInt(data.size)});
 
-             users = await model.aggregate([
+            users = await model.aggregate([
                 query
             ]);
 
          }
          else
          {
-            query.push({$match:{"isActive":true}});
+            query.push({$match:{"status":true}});
             users = await model.aggregate([
                 query
             ]);
@@ -67,8 +68,6 @@ const viewuserdetails = async(data) => {
 
          return users;
     } catch(err) {
-
-        console.log("hai")
         return false
     }
 };
@@ -78,7 +77,7 @@ const deleteuserdetails = async(data) => {
   
          const users = await model.updateMany(
             {"email" : data.email},
-            {$set: {"isActive" : false,"createdOn": new Date()}},
+            {$set: {"status" : false,"createdOn": new Date()}},
             {new : true}
         );
 
@@ -104,7 +103,28 @@ const updateuserdetails = async(data) => {
                     "createdByRole":data.createdByRole,
                     "createdById":data.createdById,
                     "isActive" : true,
+                    "status" : true,
                     "createdOn": new Date()}},
+            {new : true}
+        );
+
+         return users;
+    } catch(err) {
+
+        console.log("hai")
+        return false
+    }
+};
+
+const updateactivestatus = async(data) => {
+    try {
+
+         const users = await model.updateMany(
+            {"email" : data.email},
+            {$set: {
+                    "isActive" : data.isActive,
+                    "status" : true,
+                 }},
             {new : true}
         );
 
@@ -138,5 +158,6 @@ module.exports = {
     viewuserdetails,
     deleteuserdetails,
     updateuserdetails,
-    updatepassworddetails
+    updatepassworddetails,
+    updateactivestatus
  };

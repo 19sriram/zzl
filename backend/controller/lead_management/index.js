@@ -10,6 +10,7 @@ router.post('/adduser',user.adduser);
 router.get('/viewuser',user.viewuser);
 router.post('/deleteuser',user.deleteuser);
 router.post('/updateuser',user.updateuser);
+router.post('/updateactivestatus',user.updateactivestatus);
 router.post('/login',user.userlogin);
 router.post('/addrole',role.addrole);
 router.get('/viewrole', role.viewrole);
