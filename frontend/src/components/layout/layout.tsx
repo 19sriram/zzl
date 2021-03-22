@@ -1,5 +1,6 @@
 import { Layout, Menu, Breadcrumb, Timeline, Dropdown } from 'antd';
 // import { Component, useEffect } from 'react';
+import React, {useContext, createContext, useState } from 'react';
 import {
   SettingOutlined,
   InfoCircleOutlined 
@@ -15,10 +16,16 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Redirect,
+  useHistory,
+  useLocation
 } from "react-router-dom";
 
+
 const LayoutWrapper = () => {
+
+  
   const { Header, Content, Footer } = Layout;
   getUser();
   const menu = (<Menu mode="horizontal" >
@@ -59,6 +66,7 @@ const LayoutWrapper = () => {
                 <Route path="/">
                   <Loginn />
                 </Route>
+           
               </Switch>
             </div>
           </Content>
@@ -68,6 +76,7 @@ const LayoutWrapper = () => {
     </>
 
   )
+  
 }
 
 export default LayoutWrapper;

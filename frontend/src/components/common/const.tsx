@@ -11,7 +11,7 @@ export const UserInterface:any = {
     createdOn: '',
     isActive: '',
     role: '',
-    phonenumber: ''
+    mobile: ''
 }
 
 export const userTypes:any = {

@@ -5,7 +5,7 @@ export const userData = [{
     "createdOn": "10/03/2021",
     "isActive": true,
     "role": "superadmin",
-    "phonenumber": "1235"
+    "mobile": "1235"
   },
   {
     firstname: "Jason",
@@ -14,7 +14,7 @@ export const userData = [{
     "createdOn": "11/03/2021",
     "isActive": false,
     "role": "admin",
-    "phonenumber": "2345"
+    "mobile": "2345"
   },
   {
     firstname: "Mary",
@@ -23,7 +23,7 @@ export const userData = [{
     "createdOn": "12/03/2021",
     "isActive": true,
     "role": "manager",
-    "phonenumber": "1111"
+    "mobile": "1111"
   },
   {
     firstname: "Paris",
@@ -32,7 +32,7 @@ export const userData = [{
     "createdOn": "12/03/2021",
     "isActive": false,
     "role": "manager",
-    "phonenumber": "1111"
+    "mobile": "1111"
   },
   {
     firstname: "Hulu",
@@ -41,7 +41,7 @@ export const userData = [{
     "createdOn": "12/03/2021",
     "isActive": true,
     "role": "admin",
-    "phonenumber": "1111"
+    "mobile": "1111"
   },
   {
     firstname: "David",
@@ -50,6 +50,6 @@ export const userData = [{
     "createdOn": "12/03/2021",
     "isActive": false,
     "role": "executive",
-    "phonenumber": "1111"
+    "mobile": "1111"
   }
 ] as any;
