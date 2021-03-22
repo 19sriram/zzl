@@ -20,8 +20,10 @@ const adduser = async (req, res) => {
         var password = 'Admin@123';
         req.body.createdOn = '';
         req.body.isActive = true;
-        req.body.createdOn = new Date();
-
+        req.body.status = true;
+        var date = new Date();
+        req.body.createdOn=date.toISOString().slice(0,10)
+      
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         req.body.password = hashedPassword;
@@ -44,6 +46,21 @@ const viewuser = async (req, res) => {
         const viewuser = await users.viewuserdetails(req.query)
         if(viewuser.length!=0){
             res.send({ status: 200, result: 'Success', data:viewuser});
+        }
+        else{
+            res.send({ status: 400, result: 'Failure', message:"Data Not Found"});
+        }
+
+    } catch(err) {
+        res.send({ status: 400, result:'Failure', message: 'Some Thing Went Wrong!'}); 
+    }
+};
+
+const searchuser = async (req, res) => {
+    try {
+        const searchuser = await users.searchuserdetails(req.query)
+        if(searchuser.length!=0){
+            res.send({ status: 200, result: 'Success', data:searchuser});
         }
         else{
             res.send({ status: 400, result: 'Failure', message:"Data Not Found"});
@@ -85,6 +102,26 @@ const updateuser = async (req, res) => {
         const updateuser = await users.updateuserdetails(req.body)
         if(updateuser){
             res.send({ status: 200, result: "Success", message: 'User Updated Successfully!'});
+        }
+        else{
+            res.send({ status: 400, result: "Failure", Message: 'Some Thing Went Wrong!'});
+        }
+
+    } catch(err) {
+        res.send({ status: 400, msg: 'Some Thing Went Wrong!'}); 
+    }
+};
+
+const updateactivestatus = async (req, res) => {
+    try {
+        const checkExists = await users.viewuserdetails({email:req.body.email})
+        if(checkExists.length===0){
+            res.send({ status: 400, result: "Failure", message: 'User Not Found!'}); 
+            return false           
+        }
+        const updateactivestatus = await users.updateactivestatus(req.body)
+        if(updateactivestatus){
+            res.send({ status: 200, result: "Success", message: 'Status Updated Successfully!'});
         }
         else{
             res.send({ status: 400, result: "Failure", Message: 'Some Thing Went Wrong!'});
@@ -151,6 +188,9 @@ module.exports = {
      deleteuser,
      updateuser,
      updatepassword,
-     userlogin
+     userlogin,
+     updateactivestatus,
+     searchuser
+     
 
 };
