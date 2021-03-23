@@ -22,8 +22,9 @@ const adduser = async (req, res) => {
         req.body.isActive = true;
         req.body.status = true;
         var date = new Date();
-        req.body.createdOn=date.toISOString().slice(0,10)
-      
+
+        req.body.createdOn=date.toISOString().slice(0,10) +" "+ date.toISOString().slice(11,19);
+
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         req.body.password = hashedPassword;
@@ -46,6 +47,21 @@ const viewuser = async (req, res) => {
         const viewuser = await users.viewuserdetails(req.query)
         if(viewuser.length!=0){
             res.send({ status: 200, result: 'Success', data:viewuser});
+        }
+        else{
+            res.send({ status: 400, result: 'Failure', message:"Data Not Found"});
+        }
+
+    } catch(err) {
+        res.send({ status: 400, result:'Failure', message: 'Some Thing Went Wrong!'}); 
+    }
+};
+
+const viewdeleteuser = async (req, res) => {
+    try {
+        const viewdeleteuser = await users.viewdeleteuserdetails()
+        if(viewdeleteuser.length!=0){
+            res.send({ status: 200, result: 'Success', data:viewdeleteuser});
         }
         else{
             res.send({ status: 400, result: 'Failure', message:"Data Not Found"});
@@ -90,6 +106,7 @@ const deleteuser = async (req, res) => {
         res.send({ status: 400, msg: 'Some Thing Went Wrong!'}); 
     }
 };
+
 
 
 const updateuser = async (req, res) => {
@@ -190,7 +207,8 @@ module.exports = {
      updatepassword,
      userlogin,
      updateactivestatus,
-     searchuser
+     searchuser,
+     viewdeleteuser
      
 
 };
