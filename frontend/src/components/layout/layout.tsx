@@ -12,6 +12,7 @@ import AddRole from '../rolemgmt/addrole';
 import ViewUser from '../usermgmt/viewuser';
 import TimeLine from '../timeline/timeline';
 import Loginn from '../login/login';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -21,6 +22,7 @@ import {
   useHistory,
   useLocation
 } from "react-router-dom";
+import Mainlead from '../leadmanagement/leadmanagement';
 
 
 const LayoutWrapper = () => {
@@ -32,6 +34,7 @@ const LayoutWrapper = () => {
     <Menu.Item key="1"><Link to="/">Login</Link></Menu.Item>
     <Menu.Item key="2"><Link to="/roles">Manage Roles</Link></Menu.Item>
     <Menu.Item key="4"><Link to="/viewuser">Manage Users</Link></Menu.Item>
+    <Menu.Item key="5"><Link to="/leads">Leads</Link></Menu.Item>
   </Menu>);
   return (
     <>
@@ -62,6 +65,9 @@ const LayoutWrapper = () => {
                 </Route>
                 <Route path="/timeline">
                   <TimeLine />
+                </Route>
+                <Route path="/leads">
+                  <Mainlead/>
                 </Route>
                 <Route path="/">
                   <Loginn />
