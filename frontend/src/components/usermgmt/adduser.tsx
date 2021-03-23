@@ -43,7 +43,7 @@ const AddUser = (props: any) => {
         <Form.Item name={['user', 'lastname']} label="Last Name" rules={[{ required: true, message: 'Please enter your last name' }]}>
           <Input />
         </Form.Item>
-        <Form.Item name={['user', 'phonenumber']} label="Phone Number" rules={[{ required: true, message: 'Please enter your phone number' }]}>
+        <Form.Item name={['user', 'mobile']} label="Phone Number" rules={[{ required: true, message: 'Please enter your phone number' }]}>
           <Input />
         </Form.Item>
         <Form.Item name={['user', 'email']} label="Email" rules={[{ required: true, type: 'email', message: 'Please enter your email address' }]}>

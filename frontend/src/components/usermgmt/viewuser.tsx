@@ -112,7 +112,7 @@ const ViewUser = () => {
               <span className={'fontBig'}>{selecteduser.firstname + ' ' + selecteduser.lastname}</span><span><Tag color={tagColor[selecteduser.role]}>{selecteduser.role}</Tag>
               </span>
               <div>
-                <p><PhoneOutlined /> {selecteduser.phonenumber}</p>
+                <p><PhoneOutlined /> {selecteduser.mobile}</p>
                 <p><MailOutlined /> {selecteduser.email}</p>
                 <p><FileAddOutlined /> {selecteduser.createdOn}</p>
                 <p>{selecteduser.isActive?<Button type="primary" danger onClick={()=>isactiveUser(selecteduser)}>Delete user</Button>:<Button type="primary" onClick={()=>isactiveUser(selecteduser)}>Reactivate user</Button>}</p>
