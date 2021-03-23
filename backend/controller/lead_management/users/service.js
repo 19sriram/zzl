@@ -73,17 +73,30 @@ const viewuserdetails = async(data) => {
     }
 };
 
+
+const viewdeleteuserdetails = async() => {
+    try {
+        var users;
+            users = await model.aggregate([
+                {$match:{"status":false}}
+            ]);
+         return users;
+    } catch(err) {
+        return false
+    }
+};
+
 const searchuserdetails = async(data) => {
     try {
 
+        var query
+       
         var users = await model.aggregate([
 
-          {  $match: { $or: [{ firstname: data.data }, { lastname: data.data },{ email: data.data },{ mobile: data.data }] }}
+        {  $match: { $or: [{ firstname: data.data }, { lastname: data.data },{ email: data.data },{ mobile: data.data }] }}
               
         ]);
-        
-        console.log(users)
-
+ 
          return users;
     } catch(err) {
         return false
@@ -178,5 +191,6 @@ module.exports = {
     updateuserdetails,
     updatepassworddetails,
     updateactivestatus,
-    searchuserdetails
+    searchuserdetails,
+    viewdeleteuserdetails
  };
