@@ -53,3 +53,35 @@ export const userData = [{
     "mobile": "1111"
   }
 ] as any;
+
+
+export const LeadData = [
+  {
+    key: '1',
+    name: 'Mike',
+    age: 32,
+    address: '10 Downing Street is a street in london near to river thames where most of the peiple',
+    address1: '10 Downing Street is a street in london near to river thames where most of the peiple',
+    address2: '10 Downing Street is a street in london near to river thames where most of the peiple',
+    address3: '10 Downing Street is a street in london near to river thames where most of the peiple',
+    address4: '10 Downing Street is a street in london near to river thames where most of the peiple',
+    address5: '10 Downing Street is a street in london near to river thames where most of the peiple',
+    address6: '10 Downing Street is a street in london near to river thames where most of the peiple',
+
+
+},
+{
+  key: '2',
+  name: 'Carol',
+  age: 32,
+  address: '10 Downing Street is a street in london near to river thames where most of the peiple',
+  address1: '10 Downing Street is a street in london near to river thames where most of the peiple',
+  address2: '10 Downing Street is a street in london near to river thames where most of the peiple',
+  address3: '10 Downing Street is a street in london near to river thames where most of the peiple',
+  address4: '10 Downing Street is a street in london near to river thames where most of the peiple',
+  address5: '10 Downing Street is a street in london near to river thames where most of the peiple',
+  address6: '10 Downing Street is a street in london near to river thames where most of the peiple',
+
+
+},
+]

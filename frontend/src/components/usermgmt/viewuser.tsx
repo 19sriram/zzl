@@ -10,7 +10,7 @@ import {tagColor, UserInterface, userTypes} from '../common/const';
 import {userData} from '../common/dummy';
 import './adduser.css';
 import AddUser from './adduser';
-import { getUser, deleteUser, } from '../api/api';
+import { getUser, deleteUser,searchUser, deletedUsers } from '../api/api';
 const { Search } = Input;
 const { Option } = Select;
 
@@ -25,13 +25,20 @@ const ViewUser = () => {
   {/*-Get user information-*/}
  function getUserInfo() {
   getUser().then((response)=> {
+
     setData(response);
     setselectedUser(response[0]);
   });
   
  }
  // search user 
- const onSearch = (value: any) => console.log(value);
+ const onSearch = (value: any) => {
+   //console.log(value);
+   searchUser(value).then((response)=>{
+    response.length > 1 ? setData(response):setData([response]);
+    });
+
+ }
 
   function onuserSelect(filterName: any) {
     let _selectedUser = userList.filter((item:any) => item.firstname === filterName);
@@ -53,7 +60,11 @@ const ViewUser = () => {
 
   // on user select filter dropdown
   const onuserFilterChange = (values:any)=>{
-    console.log(values);
+    if(values === 'deleteduser') {
+      deletedUsers().then((response)=>{setData(response);setselectedUser(response[0]);});
+    } else if(values === 'all') {
+      getUserInfo();
+    }
   }
   //
   const [isModalVisible, setIsModalVisible] = useState(false);

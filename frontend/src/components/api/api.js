@@ -11,7 +11,10 @@ let _deleteuser = 'deleteuser';
 let _viewrole = 'viewrole';
 let _addrole = 'addrole';
 
-let _checkuser = 'login'
+let _checkuser = 'login';
+let _usersearch = 'searchuser';
+
+let _deletedUsers = 'viewdeleteuser';
 
 const options = {
   headers: { 'Content-Type': 'application/json' }
@@ -99,8 +102,33 @@ export async function addRole(userInfo) {
   }
 }
 
+//search user
+
+export async function searchUser (query) {
+  query = query.toLowerCase();
+
+  let response = query ? await axios.get(baseURL+userFragment+_usersearch+'?data='+query) : await getUser();
+  if(response.status !==200) {
+        console.log(response);  
+
+    return response
+  } else {
+    console.log(response);
+    response = response.data.data?response.data.data[0]:response;
+    return response;
+  }
+
+}
+
+// GET DELETED USERS
+  export async function deletedUsers() {
+    let response = await axios.get(baseURL+userFragment+_deletedUsers,options);
+    console.log(response);
+    return response.data.data;
+  }
 {/** 
 TODO:
 1. Check the role added with status message and rewrite with status code
+2. IN SEARCH USER, IF USER IS NOT FOUND HANDLE IS NOT THERE.
 
 */ }
