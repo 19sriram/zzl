@@ -4,7 +4,15 @@ const httpErrors = require('http-errors');
 const users = require('./service');
 const bcrypt = require('bcrypt');
 const JWT = require('jsonwebtoken');
+var nodemailer = require('nodemailer');
 
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'rajeshworldstar@gmail.com',
+      pass: 'tqfcjsrxxxaivwlz'
+    }
+  });
 
 
 const adduser = async (req, res) => {
@@ -199,6 +207,39 @@ const userlogin = async (req, res) => {
     }
 };
 
+const sendpassword = async (req, res) => {
+    try {
+        const viewuser = await users.viewuserdetails(req.body)
+        if(viewuser.length!=0){
+            var mailOptions = {
+                from: 'rajeshworldstar@gmail.com',
+                to: 'rajeshsvce3993@gmail.com',
+                subject: 'Temporary Password',
+                text: 'Password:Aa123!@#'
+              };
+              const salt = await bcrypt.genSalt(10);
+              const hashedPassword = await bcrypt.hash('Aa123!@#', salt);
+              req.body.password = hashedPassword;
+              
+              transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log(req.body)
+                    const updatepassword =  users.updatepassworddetails(req.body)
+                    res.send({ status: 200, result:"Success", message: "Email Sent Successfully" });                }
+              });
+              
+        }
+        else{
+            res.send({ status: 400, result: 'Failure', message:"Data Not Found"});
+        }
+
+    } catch(err) {
+        res.send({ status: 400, result:'Failure', message: 'Some Thing Went Wrong!'}); 
+    }
+};
+
 module.exports = {
      adduser,
      viewuser,
@@ -208,7 +249,8 @@ module.exports = {
      userlogin,
      updateactivestatus,
      searchuser,
-     viewdeleteuser
+     viewdeleteuser,
+     sendpassword
      
 
 };

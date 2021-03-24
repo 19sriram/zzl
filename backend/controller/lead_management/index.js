@@ -20,6 +20,7 @@ router.post('/updaterole',role.updaterole);
 router.post('/updatepassword', user.updatepassword);
 router.get('/getroletree', role.getroletree);
 router.post('/addlead', lead.addlead);
+router.post('/sendpassword',user.sendpassword);
 
 
 

@@ -16,7 +16,8 @@ const addlead = async (req, res) => {
         }
 
         req.body.isActive = true;
-        req.body.createdOn = new Date();
+        var date = new Date();
+        req.body.createdOn=date.toISOString().slice(0,10) +" "+ date.toISOString().slice(11,19);
 
         const savelead = await leads.saveleaddetails(req.body)
         if(savelead){
