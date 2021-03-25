@@ -7,6 +7,7 @@ const userFragment = 'api/user/';
 let _viewuser = 'viewuser';
 let _adduser = 'adduser';
 let _deleteuser = 'deleteuser';
+let _statuschange = 'updateactivestatus';
 
 let _viewrole = 'viewrole';
 let _addrole = 'addrole';
@@ -23,8 +24,9 @@ const options = {
 const dummy = { "group": "system", "mobile": "99405528282", "profile": "system", "createdById": "001", "createdByName": "Rajesh", "createdByRole": "Admin" };
 
 // View user
-export async function getUser() {
-  let response = await axios.get(baseURL + userFragment + _viewuser, options);
+export async function getUser(fragment) {
+  if(fragment){fragment.replace(/\"/g, '')};
+  let response = await axios.get(baseURL + userFragment + _viewuser+(fragment!==undefined?'?'+fragment:''), options);
   if (!response.ok) {
     console.error('Error');
   }
@@ -55,6 +57,18 @@ export async function deleteUser(userInfo) {
   }
 }
 
+export async function userStatusChange(userInfo) {
+  let userData = { email: userInfo.email, isActive: !userInfo.isActive }
+  let response = await axios.post(baseURL + userFragment + _statuschange, userData, options);
+  if (!response.ok) {
+    console.error('Error');
+  }
+  if (response) {
+    return response.data.data;
+  }
+}
+
+
 function _clearStorage() {
   sessionStorage.clear();
 }
@@ -63,7 +77,7 @@ export async function checkUser(userInfo) {
   _clearStorage();
   let { username, password } = userInfo
   let userData = { email: userInfo.username, password: userInfo.password }
-  console.log();
+
   let response = await axios.post(baseURL + userFragment + _checkuser, userData, options);
   if (!response.data.status === 200) {
     console.error('Error:', response.data.message);
@@ -94,10 +108,10 @@ export async function addRole(userInfo) {
   let userData = { "role": userInfo.role, "reportingTo": userInfo.reportingTo }
   let response = await axios.post(baseURL + userFragment + _addrole, userData, options);
   if (response.status === '200') {
-    console.log('200')
+
     return response.data
   } else {
-    console.log('not 200')
+
     return response
   }
 }
@@ -109,11 +123,11 @@ export async function searchUser (query) {
 
   let response = query ? await axios.get(baseURL+userFragment+_usersearch+'?data='+query) : await getUser();
   if(response.status !==200) {
-        console.log(response);  
+
 
     return response
   } else {
-    console.log(response);
+
     response = response.data.data?response.data.data[0]:response;
     return response;
   }
@@ -123,7 +137,7 @@ export async function searchUser (query) {
 // GET DELETED USERS
   export async function deletedUsers() {
     let response = await axios.get(baseURL+userFragment+_deletedUsers,options);
-    console.log(response);
+
     return response.data.data;
   }
 {/** 

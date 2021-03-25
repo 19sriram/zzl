@@ -25,13 +25,12 @@ const AddRole = ()=>{
  function getRoleInfo() {
   getRoles().then((response)=> {
     setresponseData(response);
-    console.log(response);
+
   });
 }
     const [form] = Form.useForm();
    
       const onFinish = (values: any) => {
-        console.log(values.role);
         addRole(values.role).then((resp)=>{
           if(resp.status!=='200') {
             message.error(resp.data.message)
