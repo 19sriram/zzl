@@ -4,7 +4,8 @@ import { Card, Col, Row, Avatar, Tag, Button, Divider, Modal, PageHeader, Input,
 import {
   PhoneOutlined,
   MailOutlined,
-  FileAddOutlined
+  FileAddOutlined,
+  DeleteOutlined
 } from '@ant-design/icons';
 import { tagColor, UserInterface, userTypes } from '../common/const';
 import { userData } from '../common/dummy';
@@ -23,12 +24,17 @@ const ViewUser = () => {
   useEffect(() => {
     getUserInfo()
   }, []);
+
+  //const
+  const setResponsee = (response:any)=>{
+    setData(response);
+      setselectedUser(response[0]);
+  }
+
   {/*-Get user information-*/ }
   function getUserInfo() {
     getUser().then((response) => {
-
-      setData(response);
-      setselectedUser(response[0]);
+      setResponsee(response);
     });
 
   }
@@ -39,6 +45,10 @@ const ViewUser = () => {
       response.length > 1 ? setData(response) : setData([response]);
     });
 
+  }
+
+  const _deleteUser = (selecteduser: any)=> {
+    deleteUser(selecteduser).then(()=>getUserInfo());
   }
 
   function onuserSelect(filterName: any) {
@@ -64,7 +74,6 @@ const ViewUser = () => {
     } else if (values === 'inactiveuser') {
       getUser('isActive=false').then((response) => { setData(response); setselectedUser(response[0]); });
     }
-
   }
   //
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -101,7 +110,7 @@ const ViewUser = () => {
           <Button type="primary" onClick={showModal}>New user</Button></>
         }>
           <Card type="inner" id="userCardBody">
-            {
+            { userList && (
               userList.map((userInfo: { firstname: string; lastname: string; role: any }, index: React.Key | null | undefined) =>
                 <span key={index} className={'userCard'} onClick={() => onuserSelect(userInfo.firstname)} onMouseOver={() => onHover(userInfo)}>
                   <b>{userInfo.firstname + ' ' + userInfo.lastname}</b>
@@ -109,7 +118,7 @@ const ViewUser = () => {
 
                   <Divider />
                 </span>
-              )}
+              ))}
           </Card>
         </Card>
         </Col>
@@ -122,6 +131,10 @@ const ViewUser = () => {
 
               <span className={'fontBig'}>{selecteduser.firstname + ' ' + selecteduser.lastname}</span><span><Tag color={tagColor[selecteduser.role]}>{selecteduser.role}</Tag>
               </span>
+              { filterValue !== 'deleteduser' ? 
+              <span className='delteIcon' onClick={()=>_deleteUser(selecteduser)}><DeleteOutlined id="deleteiconc" /></span>
+              : ''
+              }
               <div>
                 <p><PhoneOutlined /> {selecteduser.mobile}</p>
                 <p><MailOutlined /> {selecteduser.email}</p>
@@ -151,7 +164,6 @@ export default ViewUser;
 
 {/*
 Todo:  
-1. integrate backend for the table api filter, search
-2. To check for delete option in user and deactivate option
-3. sending only email with options deletes other values
+1. sending only email with options deletes other values
+2. edit user option to be enabled
 */}

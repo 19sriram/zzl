@@ -47,12 +47,13 @@ export async function addUser(userInfo) {
 }
 // Delete user
 export async function deleteUser(userInfo) {
-  let userData = { email: userInfo }
+  let userData = { email: userInfo.email }
   let response = await axios.post(baseURL + userFragment + _deleteuser, userData, options);
   if (!response.ok) {
     console.error('Error');
   }
   if (response) {
+    console.log('user deleted');
     return response.data.data;
   }
 }
