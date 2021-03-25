@@ -101,18 +101,17 @@ export async function getRoles() {
     console.error('Error');
   }
   if (response) {
+    console.log(response.data.data);
     return response.data.data;
   }
 }
 //add roles
-export async function addRole(userInfo) {
-  let userData = { "role": userInfo.role, "reportingTo": userInfo.reportingTo }
+export async function addRole(userInfo,selectedRole) {
+  let userData = { "role": userInfo.role, "reportingTo": selectedRole }
   let response = await axios.post(baseURL + userFragment + _addrole, userData, options);
   if (response.status === '200') {
-
     return response.data
   } else {
-
     return response
   }
 }

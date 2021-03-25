@@ -97,8 +97,6 @@ const ViewUser = () => {
         <Col span={14}><Card title="Users List" extra={<>
           <span style={{ marginRight: '10px' }}>Total: {userList.length}</span>
           <Select placeholder="Select user type" defaultValue={'all'} style={{ minWidth: '150px' }} onSelect={(values) => onuserFilterChange(values)}>
-
-
             <Option value="all">All</Option>
             <Option value="activeuser">Active User</Option>
             <Option value="inactiveuser">Inactive User</Option>
