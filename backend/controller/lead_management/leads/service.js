@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 
 const leadSchema = mongoose.Schema({
+    leadId:String,
     leadOwner: String,
     company: String,
     firstName: String,
@@ -17,12 +18,22 @@ const leadSchema = mongoose.Schema({
     leadSource: String,
     leadStatus: String,
     industry: String,
-    employeeCount: String,
+    employeeCount: Number,
     annualRevenue: String,
     rating: String,
+    skypeId: String,
+    secondaryEmail: String,
+    twitterId: String,
+    street: String,
+    city: String,
+    state: String,
+    zipcode: String,
+    country: String,
+    description: String,
+    status_history:Array,
     isActive:Boolean,
     createdById:String,
-    createdBylead:String,
+    createdByRole:String,
     createdByName:String,
     createdOn:String,
   });
@@ -42,40 +53,19 @@ const saveleaddetails = async(data) => {
 
 const viewleaddetails = async(data) => {
     try {
-      
-        var query={};
-
-         if(data.email)
-         {
-             query=data;
-         }
-         query.isActive=true;
-         const leads = await model.find(query)
-         return leads;
-         
-    } catch(err) {
-
-        console.log("hai1")
-        return false
-    }
-};
-
-const viewleadtreedetails = async(data) => {
-    try {
      
-        var query={};
+        var query=[];
+        query.push({$match:{"isActive":true}})
 
-         if(data.lead==='null')
+         if(data.leadId)
          {
-             query.reportingTo="";
-         }
-         else
-         {
-            query.reportingTo=data.lead;   
-         }
-         query.isActive=true;
-         const leads = await model.find(query)
-         return leads;
+            query.push({$match:{"leadId":data.leadId}})
+        }
+        console.log(query)
+        const leads = await model.aggregate([
+            query
+        ]);  
+        return leads;
     } catch(err) {
         return false
     }
@@ -109,5 +99,4 @@ module.exports = {
     saveleaddetails,
     viewleaddetails,
     updateleaddetails,
-    viewleadtreedetails
  };

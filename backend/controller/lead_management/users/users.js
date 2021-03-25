@@ -102,6 +102,9 @@ const deleteuser = async (req, res) => {
             res.send({ status: 400, result: "Failure", message: 'User Not Found!'}); 
             return false           
         }
+        var date = new Date();
+
+        req.body.createdOn=date.toISOString().slice(0,10) +" "+ date.toISOString().slice(11,19);
         const deleteuser = await users.deleteuserdetails(req.body)
         if(deleteuser){
             res.send({ status: 200, result: "Success", message: 'User Deleted Successfully!'});
@@ -124,6 +127,9 @@ const updateuser = async (req, res) => {
             res.send({ status: 400, result: "Failure", message: 'User Not Found!'}); 
             return false           
         }
+        var date = new Date();
+
+        req.body.createdOn=date.toISOString().slice(0,10) +" "+ date.toISOString().slice(11,19);
         const updateuser = await users.updateuserdetails(req.body)
         if(updateuser){
             res.send({ status: 200, result: "Success", message: 'User Updated Successfully!'});

@@ -109,7 +109,7 @@ const deleteuserdetails = async(data) => {
   
          const users = await model.updateMany(
             {"email" : data.email},
-            {$set: {"status" : false,"createdOn": new Date()}},
+            {$set: {"status" : false,"createdOn": data.createdOn}},
             {new : true}
         );
 
@@ -135,7 +135,7 @@ const updateuserdetails = async(data) => {
                     "createdById":data.createdById,
                     "isActive" : true,
                     "status" : true,
-                    "createdOn": new Date()}},
+                    "createdOn": data.createdOn}},
             {new : true}
         );
 
