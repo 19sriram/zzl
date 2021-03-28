@@ -23,6 +23,7 @@ import {
   useLocation
 } from "react-router-dom";
 import Mainlead from '../leadmanagement/leadmanagement';
+import UpdatePwd from '../usermgmt/updatepwd';
 
 
 const LayoutWrapper = () => {
@@ -35,6 +36,7 @@ const LayoutWrapper = () => {
     <Menu.Item key="2"><Link to="/roles">Manage Roles</Link></Menu.Item>
     <Menu.Item key="4"><Link to="/viewuser">Manage Users</Link></Menu.Item>
     <Menu.Item key="5"><Link to="/leads">Leads</Link></Menu.Item>
+    <Menu.Item key="6"><Link to="/updatepwd">Update Password</Link></Menu.Item>
   </Menu>);
   return (
     <>
@@ -68,6 +70,9 @@ const LayoutWrapper = () => {
                 </Route>
                 <Route path="/leads">
                   <Mainlead/>
+                </Route>
+                <Route path="/updatepwd">
+                  <UpdatePwd/>
                 </Route>
                 <Route path="/">
                   <Loginn />

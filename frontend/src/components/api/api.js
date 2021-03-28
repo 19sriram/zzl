@@ -17,6 +17,8 @@ let _usersearch = 'searchuser';
 
 let _deletedUsers = 'viewdeleteuser';
 
+let _changepassword = 'updatepassword';
+
 const options = {
   headers: { 'Content-Type': 'application/json' }
 };
@@ -140,6 +142,23 @@ export async function searchUser (query) {
 
     return response.data.data;
   }
+
+
+  // user change password
+
+  export async function changepassword(email,password) {
+    let userData = { email: email, password: password }
+    let response = await axios.post(baseURL + userFragment + _changepassword, userData, options);
+    if (!response.ok) {
+      console.error('Error');
+    }
+    if (response) {
+      console.log('user password changed');
+      return response
+    }
+  }
+
+
 {/** 
 TODO:
 1. Check the role added with status message and rewrite with status code
