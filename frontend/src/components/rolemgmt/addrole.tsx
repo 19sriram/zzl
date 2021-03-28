@@ -38,7 +38,9 @@ const AddRole = () => {
       if (resp.status !== '200') {
         message.info(resp.data.message)
       } else {
-        message.success('Role created successfully')
+        
+        message.success('Role created successfully');
+      
       }
     });
     form.resetFields();

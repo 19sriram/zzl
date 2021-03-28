@@ -1,9 +1,7 @@
-import  {  useState } from 'react';
+import  { useState } from 'react';
 import {useHistory} from 'react-router-dom';
 import {Form, Modal, Input, Button, message} from 'antd';
 import {changepassword} from '../api/api';
-
-
 
 const UpdatePwd = () =>{
     const [form] = Form.useForm();
@@ -42,7 +40,6 @@ const UpdatePwd = () =>{
 
  });
   
-   //setIsModalVisible(false);
    history.push('/login')
   };
 
