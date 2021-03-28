@@ -1,7 +1,7 @@
 import { Form, Input, Button, Checkbox, Modal, message } from 'antd';
 import { useState } from 'react';
 import { role, getRole } from '../common/functions';
-import { checkUser } from '../api/api';
+import { checkUser, sendpassword } from '../api/api';
 import './login.css';
 const Loginn = () => {
   //
@@ -13,6 +13,7 @@ const Loginn = () => {
   };
 
   const handleOk = () => {
+    
     setIsModalVisible(false);
   };
 
@@ -41,6 +42,19 @@ const Loginn = () => {
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
+
+  const onEmailSend = (value:any)=>{
+    console.log(value);
+    sendpassword(value.email).then((response)=>{
+      if(response?.data.status !== 200) {
+        message.error(response?.data.message)
+      } else {
+        message.success('link sent successfully');
+      }
+
+    })
+  }
+
 
 
   return (
@@ -84,13 +98,11 @@ const Loginn = () => {
         {
           <>
             <p>Please enter your email address that you have associated. We will send an email link to reset your password</p>
-            <Form>
-              <Form.Item label="Enter email">
+            <Form onFinish={onEmailSend}>
+              <Form.Item label="Enter email" name={ 'email'}>
                 <Input />
               </Form.Item>
               <Form.Item>
-
-
                 <Button block type="primary" htmlType="submit">
                   Submit
         </Button>

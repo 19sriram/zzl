@@ -18,6 +18,7 @@ let _usersearch = 'searchuser';
 let _deletedUsers = 'viewdeleteuser';
 
 let _changepassword = 'updatepassword';
+let _sendpassword = 'sendpassword';
 
 const options = {
   headers: { 'Content-Type': 'application/json' }
@@ -159,6 +160,19 @@ export async function searchUser (query) {
   }
 
 
+  //send password
+
+  export async function sendpassword(email) {
+    let userData = { email: email }
+    let response = await axios.post(baseURL + userFragment + _sendpassword, userData, options);
+    if (!response.ok) {
+      console.error('Error');
+    }
+    if (response) {
+      console.log('user and pwd emailed');
+      return response
+    }
+  }
 {/** 
 TODO:
 1. Check the role added with status message and rewrite with status code
