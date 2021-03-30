@@ -238,7 +238,7 @@ const sendpassword = async (req, res) => {
               
         }
         else{
-            res.send({ status: 400, result: 'Failure', message:"Data Not Found"});
+            res.send({ status: 400, result: 'Failure', message:"Email Not Found"});
         }
 
     } catch(err) {

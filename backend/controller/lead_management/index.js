@@ -19,9 +19,12 @@ router.get('/viewrole', role.viewrole);
 router.post('/updaterole',role.updaterole);
 router.post('/updatepassword', user.updatepassword);
 router.get('/getroletree', role.getroletree);
+router.post('/sendpassword',user.sendpassword);
+
 router.post('/addlead', lead.addlead);
 router.get('/viewlead', lead.viewlead);
-router.post('/sendpassword',user.sendpassword);
+router.post('/updateleadstatus',lead.updateleadstatus);
+router.get('/viewleadstatus',lead.viewleadstatus);
 
 
 

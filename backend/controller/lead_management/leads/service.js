@@ -71,26 +71,40 @@ const viewleaddetails = async(data) => {
     }
 };
 
-const updateleaddetails = async(data) => {
+const updateleadstatus = async(data) => {
     try {
-        console.log("hai1")
+
          const leads = await model.updateMany(
-            {"lead" : data.lead},
-            {$set: {"lead":data.lead,
-                    "reportingTo":data.reportingTo,
-                    "description":data.description,
-                    "createdByName":data.createdByName,
-                    "createdBylead":data.createdBylead,
-                    "createdById":data.createdById,
-                    "isActive" : true,
-                    "createdOn": new Date()}},
+            {"leadId" : data.leadId},
+            {$set: {"status_history":data.status_history,
+                    }},
             {new : true}
         );
 
          return leads;
     } catch(err) {
 
-        console.log("hai")
+        return false
+    }
+};
+
+const viewleadstatusdetails = async(data) => {
+    try {
+     
+        var query=[];
+        query.push({$match:{"isActive":true}})
+
+         if(data.leadId)
+         {
+            query.push({$match:{"leadId":data.leadId}})
+        }
+       query.push({$project:{statushistory:"$status_history"}})
+        const leads = await model.aggregate([
+            query,
+            
+        ]);  
+        return leads;
+    } catch(err) {
         return false
     }
 };
@@ -98,5 +112,6 @@ const updateleaddetails = async(data) => {
 module.exports = { 
     saveleaddetails,
     viewleaddetails,
-    updateleaddetails,
+    updateleadstatus,
+    viewleadstatusdetails
  };

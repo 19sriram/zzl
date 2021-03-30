@@ -16,7 +16,10 @@ const addlead = async (req, res) => {
 
         var status=[{
             status:"CREATED",
-            date:date.toISOString().slice(0,10) +" "+ date.toISOString().slice(11,19)
+            date:date.toISOString().slice(0,10) +" "+ date.toISOString().slice(11,19),
+            createdById:req.body.createdById,
+            createdByRole:req.body.createdByRole,
+            createdByName:req.body.createdByName
         }];
         req.body.status_history=status;
         req.body.createdOn=date.toISOString().slice(0,10) +" "+ date.toISOString().slice(11,19);
@@ -51,15 +54,25 @@ const viewlead = async (req, res) => {
 };
 
 
-const updatelead = async (req, res) => {
+const updateleadstatus = async (req, res) => {
     try {
-        const checkExists = await leads.viewleaddetails({lead:req.body.lead})
+        var date = new Date();
+        var status={
+            status:req.body.status,
+            date:date.toISOString().slice(0,10) +" "+ date.toISOString().slice(11,19),
+            createdById:req.body.createdById,
+            createdByRole:req.body.createdByRole,
+            createdByName:req.body.createdByName
+        };
+        const checkExists = await leads.viewleaddetails({leadId:req.body.leadId})
         if(checkExists.length===0){
             res.send({ status: 200, result: "Failure", message: 'lead Not Found!'}); 
             return false           
         }
-        const updatelead = await leads.updateleaddetails(req.body)
-        if(updatelead){
+        checkExists[0].status_history.push(status)
+
+        const updateleadstatus = await leads.updateleadstatus(checkExists[0])
+        if(updateleadstatus){
             res.send({ status: 200, result: "Success", message: 'lead Updated Successfully!'});
         }
         else{
@@ -71,12 +84,29 @@ const updatelead = async (req, res) => {
     }
 };
 
+const viewleadstatus = async (req, res) => {
+    try {
+
+        const viewleadstatus = await leads.viewleadstatusdetails(req.query);
+        if(viewleadstatus.length!=0){
+            res.send({ status: 200, result: 'Success', data:viewleadstatus});
+        }
+        else{
+            res.send({ status: 200, result: 'Failure', message:"Data Not Found"});
+        }
+
+    } catch(err) {
+        res.send({ status: 400, result:'Failure', message: 'Some Thing Went Wrong!'}); 
+    }
+};
+
 
 
 module.exports = {
      addlead,
      viewlead,
-     updatelead,
+     updateleadstatus,
+     viewleadstatus
    
 
 };
