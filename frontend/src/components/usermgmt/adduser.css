@@ -21,3 +21,14 @@
    max-height: 60vh;
    overflow-y: scroll;
  }
+
+ .delteIcon {
+  padding: 10px 14px;
+  background: #ff4140;
+  border-radius: 50px;
+  float: right;
+  cursor: pointer;
+ }
+ #deleteiconc {
+   color: white;
+ }
