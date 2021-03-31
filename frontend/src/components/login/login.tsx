@@ -99,7 +99,7 @@ const Loginn = () => {
         </Col>
       </Row>
       
-      <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null}>
+      <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null} width={700}>
         {
           <>
             <p>Please enter your email address that you have associated. We will send an email link to reset your password</p>
