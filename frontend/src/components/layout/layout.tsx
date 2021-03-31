@@ -1,6 +1,5 @@
-import { Layout, Menu, Breadcrumb, Timeline, Dropdown } from 'antd';
+import { Layout, Menu, Breadcrumb, Timeline, Dropdown, Popover } from 'antd';
 // import { Component, useEffect } from 'react';
-import React, {useContext, createContext, useState } from 'react';
 import {
   SettingOutlined,
   InfoCircleOutlined 
@@ -20,8 +19,9 @@ import {
 } from "react-router-dom";
 import Mainlead from '../leadmanagement/leadmanagement';
 import UpdatePwd from '../usermgmt/updatepwd';
+import React from 'react';
 
-
+const content = <>LMS Version: 0.1</>
 const LayoutWrapper = () => {
 
   
@@ -42,10 +42,14 @@ const LayoutWrapper = () => {
             <div className="logo" />
             <Dropdown overlay={menu} className="goRight">
               <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                <span><SettingOutlined style={{ fontSize: '20px' }} /></span>
+                <span><SettingOutlined  /></span>
               </a>
             </Dropdown>
+            
+            <Popover content={content} title="About LMS">
             <InfoCircleOutlined style={{color: "white", fontSize: '15px'}}/>
+
+  </Popover>
           </Header>
           <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>    
             <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
@@ -55,7 +59,6 @@ const LayoutWrapper = () => {
                 </Route>
                 <Route path="/viewuser">
                   <ViewUser />
-                
                 </Route>
                 <Route path="/timeline">
                   <TimeLine />
@@ -72,7 +75,7 @@ const LayoutWrapper = () => {
               </Switch>
             </div>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>MIT License - 2021 &copy; </Footer>
+          <Footer style={{ textAlign: 'center' }}>MIT License - 2021 &copy; Copyrights reserved LMS </Footer>
         </Router>
       </Layout>
     </>

@@ -1,5 +1,5 @@
-import { Form, Input, Button, Checkbox, Modal, message } from 'antd';
-import { useState } from 'react';
+import { Form, Input, Button, Checkbox, Modal, message, Col, Row } from 'antd';
+import React, { useState } from 'react';
 import { role, getRole } from '../common/functions';
 import { checkUser, sendpassword } from '../api/api';
 import './login.css';
@@ -59,8 +59,10 @@ const Loginn = () => {
 
   return (
     <>
-
-      <Form
+      <Row  justify="center" align="middle" style={{minHeight: '40vh'}}>
+        <Col span={12}>
+          <img className="logo" src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"/>
+          <Form
         {...layout}
         name="basic"
         initialValues={{ remember: true }}
@@ -94,6 +96,9 @@ const Loginn = () => {
         </Button>
         </Form.Item>
       </Form>
+        </Col>
+      </Row>
+      
       <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null}>
         {
           <>

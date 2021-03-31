@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Card, Col, Row, Avatar, Tag, Button, Divider, Modal, PageHeader, Input, Select } from 'antd';
+import { Card, Col, Row, Avatar, Tag, Button, Divider, Modal, PageHeader, Input, Select, Empty } from 'antd';
 import {
   PhoneOutlined,
   MailOutlined,
@@ -9,8 +9,8 @@ import {
 } from '@ant-design/icons';
 import { tagColor, UserInterface, userTypes } from '../common/const';
 import { userData } from '../common/dummy';
-import './adduser.css';
 import AddUser from './adduser';
+import './adduser.css';
 import { getUser, deleteUser, searchUser, deletedUsers, userStatusChange } from '../api/api';
 const { Search } = Input;
 const { Option } = Select;
@@ -91,8 +91,15 @@ const ViewUser = () => {
   };
 
   //
+  console.log(userList)
   return (
-    <div>
+    
+    <>
+    <PageHeader title={'USERS'}/>
+    {
+      
+      userList.length>1?
+      <div>
       <Row>
         <Col span={14}><Card title="Users List" extra={<>
           <span style={{ marginRight: '10px' }}>Total: {userList.length}</span>
@@ -155,7 +162,11 @@ const ViewUser = () => {
           <AddUser isCreated={() => setIsModalVisible(false)} isCancelled={() => setIsModalVisible(false)} getUserInfo={() => getUserInfo()} />
         </Modal>
       </>
-    </div>
+    </div>:
+    <Empty/>
+    }
+   
+    </>
   )
 };
 export default ViewUser;
