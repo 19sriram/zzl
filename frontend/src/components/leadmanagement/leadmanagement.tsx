@@ -12,18 +12,18 @@ const layout = {
 const { Option } = Select;
 
 const data: any = [];
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 6; i++) {
   data.push({
     key: i,
     name: `Edward King ${i}`,
-    age: 32,
+    email: `test@test.commmmmm`,
+    leadsource: `London, Park Lane no. ${i}`,
+    leadstatus: `London, Park Lane no. ${i}`,
+    designation: `London, Park Lane no. ${i}`,
     address: `London, Park Lane no. ${i}`,
-    address1: `London, Park Lane no. ${i}`,
-    address2: `London, Park Lane no. ${i}`,
-    address3: `London, Park Lane no. ${i}`,
-    address4: `London, Park Lane no. ${i}`,
-    address5: `London, Park Lane no. ${i}`,
-    address6: `London, Park Lane no. ${i}`,
+    leadstate: `London, Park Lane no. ${i}`,
+    leadowner: `London, Park Lane no. ${i}`,
+    phonenumber: `London, Park Lane no. ${i}`,
   });
 }
 
@@ -38,6 +38,7 @@ class Lead extends React.Component {
     visibleMenuSettings: false,
     isModalVisible: false,
     activeValue:0,
+    columnTitle:[],
     columns: [
       {
         title: 'Name',
@@ -45,44 +46,51 @@ class Lead extends React.Component {
 
       },
       {
-        title: 'Age',
-        dataIndex: 'age',
+        title: 'E-mail',
+        dataIndex: 'email',
 
+      },
+      {
+        title: 'Lead Owner',
+        dataIndex: 'leadowner',
+      },
+      {
+        title: 'Designation',
+        dataIndex: 'designation',
+      },
+      {
+        title: 'Phone Number',
+        dataIndex: 'phonenumber',
+      },
+      {
+        title: 'Lead Source',
+        dataIndex: 'leadsource',
+      },
+      {
+        title: 'Lead Status',
+        dataIndex: 'leadstatus',
       },
       {
         title: 'Address',
         dataIndex: 'address',
       },
       {
-        title: 'Address1',
-        dataIndex: 'address1',
-      },
-      {
-        title: 'Address2',
-        dataIndex: 'address2',
-      },
-      {
-        title: 'Address3',
-        dataIndex: 'address3',
-      },
-      {
-        title: 'Address4',
-        dataIndex: 'address4',
-      },
-      {
-        title: 'Address5',
-        dataIndex: 'address5',
-      },
-      {
-        title: 'Address6',
-        dataIndex: 'address6',
+        title: 'Lead State',
+        dataIndex: 'leadstate',
       },
     ],
     initialColumns: []
   };
 
   componentDidMount() {
-    this.setState({ initialColumns: this.state.columns })
+    this.setState({ initialColumns: this.state.columns });
+    let headers = this.state.columns.map(item=>item.title);
+    setTimeout(() => {
+      this.setState({columnTitle:headers});
+      console.log(this.state.columnTitle);
+
+    }, 2000);
+    
   }
 
   onValueChange = (e:any)=>console.log(e);
@@ -110,8 +118,10 @@ class Lead extends React.Component {
     const menu = (
       <Menu>
         <Menu.ItemGroup title="Columns" >
-          <Menu.Item key="4"><Checkbox id="age" onChange={this.onChange} defaultChecked>Age</Checkbox></Menu.Item>
-          <Menu.Item key="5"><Checkbox id="address" onChange={this.onChange} defaultChecked>Address</Checkbox></Menu.Item>
+          {this.state.columnTitle.map((item:any,index)=>{
+          <Menu.Item key={index}><Checkbox id={item.toLowerCase()} onChange={this.onChange} defaultChecked>{item}</Checkbox></Menu.Item>
+          }
+            )}
         </Menu.ItemGroup>
       </Menu>
     );
