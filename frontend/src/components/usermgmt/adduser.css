@@ -6,7 +6,6 @@
     font-size: 3em;
     vertical-align: middle;
     margin: 0px 10px;
-
   }
 
   .userCard {
@@ -29,6 +28,7 @@
   float: right;
   cursor: pointer;
  }
+
  #deleteiconc {
    color: white;
  }

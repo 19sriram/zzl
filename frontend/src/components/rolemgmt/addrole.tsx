@@ -1,7 +1,6 @@
 // User adds new user to the system
 import { Form, Input, Button, Select, PageHeader, Modal, message } from 'antd';
 import { useEffect, useState } from 'react';
-//import {Treeview} from '../treeview/treeview';
 import { getRoles, addRole } from '../api/api';
 
 import './addrole.css';
@@ -18,11 +17,13 @@ const tailLayout = {
 
 const AddRole = () => {
   const [responseData, setresponseData] = React.useState([]);
+
   useEffect(() => {
     getRoles().then((response) => {
       setresponseData(response);
     });
   }, []);
+
   {/*-Get user information-*/ }
   function getRoleInfo() {
 
@@ -38,9 +39,9 @@ const AddRole = () => {
       if (resp.status !== '200') {
         message.info(resp.data.message)
       } else {
-        
+
         message.success('Role created successfully');
-      
+
       }
     });
     form.resetFields();
@@ -53,9 +54,6 @@ const AddRole = () => {
   //
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
 
   const handleOk = () => {
     setIsModalVisible(false);
@@ -70,7 +68,6 @@ const AddRole = () => {
   return (
 
     <>
-      {console.log(1, responseData)}
       <PageHeader
         className="site-page-header"
         title="New Role"
@@ -108,7 +105,6 @@ const AddRole = () => {
 
 
       />} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null}>
-        {/* <Treeview data={responseData}/> */}
       </Modal>
     </>
   )

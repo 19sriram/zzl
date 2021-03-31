@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import 'antd/dist/antd.css';
-import { Table, Button, Dropdown, Menu, Checkbox, Modal, PageHeader, Form, Input, InputNumber, Select, Row, Col } from 'antd';
-import { AlignLeftOutlined, DownOutlined } from '@ant-design/icons';
+import { Table, Button, Dropdown, Menu, Checkbox, Modal, PageHeader, Form, Input, Select, Row, Col } from 'antd';
+import { AlignLeftOutlined } from '@ant-design/icons';
 
 const layout = {
   labelCol: { span: 8 },
@@ -12,6 +11,7 @@ const layout = {
 const { Option } = Select;
 
 const data: any = [];
+
 for (let i = 0; i < 6; i++) {
   data.push({
     key: i,
@@ -30,15 +30,15 @@ for (let i = 0; i < 6; i++) {
 class Lead extends React.Component {
   constructor(props: any) {
     super(props);
-
   }
+
   state = {
     value: false,
     checkedColumns: [],
     visibleMenuSettings: false,
     isModalVisible: false,
-    activeValue:0,
-    columnTitle:[],
+    activeValue: 0,
+    columnTitle: [],
     columns: [
       {
         title: 'Name',
@@ -84,19 +84,16 @@ class Lead extends React.Component {
 
   componentDidMount() {
     this.setState({ initialColumns: this.state.columns });
-    let headers = this.state.columns.map(item=>item.title);
+    let headers = this.state.columns.map(item => item.title);
     setTimeout(() => {
-      this.setState({columnTitle:headers});
-      console.log(this.state.columnTitle);
+      this.setState({ columnTitle: headers });
+    }, 100);
 
-    }, 2000);
-    
   }
 
-  onValueChange = (e:any)=>console.log(e);
-  handleVisibleChange = (flag: any) => {
-    this.setState({ visibleMenuSettings: flag });
-  };
+  onValueChange = (e: any) => console.log(e);
+
+  handleVisibleChange = (flag: any) => this.setState({ visibleMenuSettings: flag })
 
   onChange = (e: any) => {
     let checkedColumns: any = [];
@@ -108,8 +105,8 @@ class Lead extends React.Component {
       checkedColumns.push(e.target.id);
     }
 
-    var filtered = this.state.initialColumns;
-    for (var i = 0; i < checkedColumns.length; i++)
+    let filtered = this.state.initialColumns;
+    for (let i = 0; i < checkedColumns.length; i++)
       filtered = filtered.filter((el: any) => { return el.dataIndex !== checkedColumns[i] })
     this.setState({ columns: filtered, checkedColumns: checkedColumns })
   }
@@ -118,16 +115,14 @@ class Lead extends React.Component {
     const menu = (
       <Menu>
         <Menu.ItemGroup title="Columns" >
-          {this.state.columnTitle.map((item:any,index)=>{
-          <Menu.Item key={index}><Checkbox id={item.toLowerCase()} onChange={this.onChange} defaultChecked>{item}</Checkbox></Menu.Item>
+          {this.state.columnTitle.map((item: any, index) => {
+            <Menu.Item key={index}><Checkbox id={item.toLowerCase()} onChange={this.onChange} defaultChecked>{item}</Checkbox></Menu.Item>
           }
-            )}
+          )}
         </Menu.ItemGroup>
       </Menu>
     );
-
     //
-
     const showModal = () => {
       this.setState({
         isModalVisible: true
@@ -149,7 +144,6 @@ class Lead extends React.Component {
     const onFinish = (values: any) => {
       console.log(1, values);
     }
-
     //
 
     return (
@@ -157,7 +151,7 @@ class Lead extends React.Component {
         Records:
         <Select
           value={1}
-         
+
           style={{ width: 80, margin: '0 8px' }}
         >
           <Option value="20">20</Option>
@@ -165,17 +159,17 @@ class Lead extends React.Component {
         </Select>
 
         <span style={{ float: 'right' }}>
-        <Button  type="primary" onClick={showModal.bind(this)} style={{marginRight:'1em'}}>New Lead</Button>
-        <Dropdown
-          overlay={menu}
-          onVisibleChange={this.handleVisibleChange}
-          visible={this.state.visibleMenuSettings}
-          
-        >
-          <Button><AlignLeftOutlined /></Button>
-        </Dropdown>
+          <Button type="primary" onClick={showModal.bind(this)} style={{ marginRight: '1em' }}>New Lead</Button>
+          <Dropdown
+            overlay={menu}
+            onVisibleChange={this.handleVisibleChange}
+            visible={this.state.visibleMenuSettings}
+
+          >
+            <Button><AlignLeftOutlined /></Button>
+          </Dropdown>
         </span>
-        <Table columns={this.state.columns} dataSource={data} scroll={{ x: '1800' }} style={{paddingTop:'1em'}}/>
+        <Table columns={this.state.columns} dataSource={data} scroll={{ x: '1800' }} style={{ paddingTop: '1em' }} />
 
         <Modal width={1000}
           title={<PageHeader

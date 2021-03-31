@@ -1,19 +1,18 @@
-import { Form, Input, Button, Checkbox, Modal, message, Col, Row } from 'antd';
-import React, { useState } from 'react';
+import { Form, Input, Button, Modal, message, Col, Row } from 'antd';
+import  { useState } from 'react';
 import { role, getRole } from '../common/functions';
 import { checkUser, sendpassword } from '../api/api';
 import './login.css';
-const Loginn = () => {
+
+const LoginComponent = () => {
   //
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-
+  
   const showModal = () => {
     setIsModalVisible(true);
   };
 
   const handleOk = () => {
-    
     setIsModalVisible(false);
   };
 
@@ -26,9 +25,11 @@ const Loginn = () => {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
   };
+
   const tailLayout = {
     wrapperCol: { offset: 8, span: 16 },
   };
+
   const onFinish = (values: any) => {
     checkUser(values).then((rep) => {
       if (rep.data.status !== 200) {
@@ -51,7 +52,6 @@ const Loginn = () => {
       } else {
         message.success('link sent successfully');
       }
-
     })
   }
 
@@ -87,7 +87,6 @@ const Loginn = () => {
 
         <Form.Item {...tailLayout} name="remember" valuePropName="checked">
           <a onClick={showModal}><span className="blueColor">Forgot Password?</span></a>
-
         </Form.Item>
 
         <Form.Item {...tailLayout}>
@@ -110,8 +109,7 @@ const Loginn = () => {
               <Form.Item>
                 <Button block type="primary" htmlType="submit">
                   Submit
-        </Button>
-
+                </Button>
               </Form.Item>
             </Form>
           </>
@@ -121,4 +119,4 @@ const Loginn = () => {
   )
 }
 
-export default Loginn;
+export default LoginComponent;

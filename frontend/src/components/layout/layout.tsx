@@ -1,16 +1,14 @@
-import { Layout, Menu, Breadcrumb, Timeline, Dropdown, Popover } from 'antd';
-// import { Component, useEffect } from 'react';
+import { Layout, Menu, Dropdown, Popover } from 'antd';
 import {
   SettingOutlined,
   InfoCircleOutlined 
 } from '@ant-design/icons';
-import './layout.css';
+
 import { getUser } from '../api/api';
 import AddRole from '../rolemgmt/addrole';
 import ViewUser from '../usermgmt/viewuser';
 import TimeLine from '../timeline/timeline';
-import Loginn from '../login/login';
-
+import LoginComponent from '../login/login';
 import {
   BrowserRouter as Router,
   Switch,
@@ -19,14 +17,14 @@ import {
 } from "react-router-dom";
 import Mainlead from '../leadmanagement/leadmanagement';
 import UpdatePwd from '../usermgmt/updatepwd';
-import React from 'react';
 
-const content = <>LMS Version: 0.1</>
-const LayoutWrapper = () => {
+import './layout.css';
 
+    const content = <>LMS Version: 0.1</>
+    const LayoutWrapper = () => {
+    const { Header, Content, Footer } = Layout;
+    getUser();
   
-  const { Header, Content, Footer } = Layout;
-  getUser();
   const menu = (<Menu mode="horizontal" >
     <Menu.Item key="1"><Link to="/">Login</Link></Menu.Item>
     <Menu.Item key="2"><Link to="/roles">Manage Roles</Link></Menu.Item>
@@ -34,6 +32,7 @@ const LayoutWrapper = () => {
     <Menu.Item key="5"><Link to="/leads">Leads</Link></Menu.Item>
     <Menu.Item key="6"><Link to="/updatepwd">Update Password</Link></Menu.Item>
   </Menu>);
+
   return (
     <>
       <Layout>
@@ -49,7 +48,7 @@ const LayoutWrapper = () => {
             <Popover content={content} title="About LMS">
             <InfoCircleOutlined style={{color: "white", fontSize: '15px'}}/>
 
-  </Popover>
+        </Popover>
           </Header>
           <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>    
             <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
@@ -70,7 +69,7 @@ const LayoutWrapper = () => {
                   <UpdatePwd/>
                 </Route>
                 <Route path="/">
-                  <Loginn />
+                  <LoginComponent />
                 </Route>
               </Switch>
             </div>
