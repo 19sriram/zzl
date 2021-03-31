@@ -12,20 +12,21 @@ const leadSchema = mongoose.Schema({
     title: String,
     email: String,
     phone: String,
-    fax: String,
+  /*  fax: String,*/
     mobile: String,
     website: String,
     leadSource: String,
     leadStatus: String,
     industry: String,
-    employeeCount: Number,
+   /* employeeCount: Number,
     annualRevenue: String,
     rating: String,
     skypeId: String,
     secondaryEmail: String,
-    twitterId: String,
-    street: String,
-    city: String,
+    twitterId: String,*/
+   address:String,
+  /*  street: String,
+    city: String,*/
     state: String,
     zipcode: String,
     country: String,
@@ -61,7 +62,6 @@ const viewleaddetails = async(data) => {
          {
             query.push({$match:{"leadId":data.leadId}})
         }
-        console.log(query)
         const leads = await model.aggregate([
             query
         ]);  
