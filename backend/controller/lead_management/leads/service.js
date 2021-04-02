@@ -39,6 +39,8 @@ const leadSchema = mongoose.Schema({
     createdOn:String,
   });
 
+  
+
 const model = mongoose.model('leads', leadSchema);
 
 
@@ -109,9 +111,80 @@ const viewleadstatusdetails = async(data) => {
     }
 };
 
+const notificationSchema = mongoose.Schema({
+    leadId:String,
+    leadOwner: String,
+    company: String,
+    firstName: String,
+    lastName: String,
+    title: String,
+    email: String,
+    phone: String,
+  /*  fax: String,*/
+    mobile: String,
+    website: String,
+    leadSource: String,
+    leadStatus: String,
+    industry: String,
+   /* employeeCount: Number,
+    annualRevenue: String,
+    rating: String,
+    skypeId: String,
+    secondaryEmail: String,
+    twitterId: String,*/
+   address:String,
+  /*  street: String,
+    city: String,*/
+    state: String,
+    zipcode: String,
+    country: String,
+    description: String,
+    status_history:Array,
+    isActive:Boolean,
+    createdById:String,
+    createdByRole:String,
+    createdByName:String,
+    createdOn:String,
+  });
+
+  const model1 = mongoose.model('notification', notificationSchema);
+
+
+const savenotificationdetails = async(data) => {
+    try {
+        const notification = new model1(data);
+        const savedata = await user.save();
+        return savedata;
+    } catch(err) {
+        return false
+    }
+};
+
+const viewnotificationdetails = async(data) => {
+    try {
+     
+        var query=[];
+        query.push({$match:{"isActive":true}})
+
+         if(data.userId)
+         {
+            query.push({$match:{"userId":data.userId}})
+        }
+        const notification = await model1.aggregate([
+            query
+        ]);  
+        return notification;
+    } catch(err) {
+        return false
+    }
+};
+
+
 module.exports = { 
     saveleaddetails,
     viewleaddetails,
     updateleadstatus,
-    viewleadstatusdetails
+    viewleadstatusdetails,
+    savenotificationdetails,
+    viewnotificationdetails
  };
