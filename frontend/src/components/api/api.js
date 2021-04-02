@@ -1,5 +1,8 @@
+/*--
+  :::::::::: Note: Holds the api calls :::::::::::
+--*/
 import axios from 'axios';
-import {jwtDecoder} from '../common/functions';
+import { jwtDecoder } from '../common/functions';
 
 const baseURL = 'http://54.255.190.88:3000/'
 const userFragment = 'api/user/';
@@ -25,6 +28,10 @@ const options = {
 };
 
 const dummy = { "group": "system", "mobile": "99405528282", "profile": "system", "createdById": "001", "createdByName": "Rajesh", "createdByRole": "Admin" };
+
+function _clearStorage() {
+  sessionStorage.clear();
+}
 
 // View user
 export async function getUser(fragment) {
@@ -60,7 +67,7 @@ export async function deleteUser(userInfo) {
     return response.data.data;
   }
 }
-
+// User status change
 export async function userStatusChange(userInfo) {
   let userData = { email: userInfo.email, isActive: !userInfo.isActive }
   let response = await axios.post(baseURL + userFragment + _statuschange, userData, options);
@@ -73,9 +80,7 @@ export async function userStatusChange(userInfo) {
 }
 
 
-function _clearStorage() {
-  sessionStorage.clear();
-}
+
 // login user
 export async function checkUser(userInfo) {
   _clearStorage();
@@ -173,6 +178,7 @@ export async function searchUser (query) {
       return response
     }
   }
+
 {/** 
 TODO:
 1. Check the role added with status message and rewrite with status code

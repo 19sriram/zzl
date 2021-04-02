@@ -1,5 +1,5 @@
 // User adds new user to the system
-import { Form, Input, Button, Select, PageHeader, message } from 'antd';
+import { Form, Input, Button, Select, message } from 'antd';
 import { addUser } from '../api/api';
 import './adduser.css';
 const { Option } = Select;

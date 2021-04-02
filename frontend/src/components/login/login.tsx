@@ -1,19 +1,18 @@
-import { Form, Input, Button, Checkbox, Modal, message } from 'antd';
-import { useState } from 'react';
+import { Form, Input, Button, Modal, message, Col, Row } from 'antd';
+import  { useState } from 'react';
 import { role, getRole } from '../common/functions';
 import { checkUser, sendpassword } from '../api/api';
 import './login.css';
-const Loginn = () => {
+
+const LoginComponent = () => {
   //
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-
+  
   const showModal = () => {
     setIsModalVisible(true);
   };
 
   const handleOk = () => {
-    
     setIsModalVisible(false);
   };
 
@@ -26,9 +25,11 @@ const Loginn = () => {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
   };
+
   const tailLayout = {
     wrapperCol: { offset: 8, span: 16 },
   };
+
   const onFinish = (values: any) => {
     checkUser(values).then((rep) => {
       if (rep.data.status !== 200) {
@@ -51,7 +52,6 @@ const Loginn = () => {
       } else {
         message.success('link sent successfully');
       }
-
     })
   }
 
@@ -59,8 +59,10 @@ const Loginn = () => {
 
   return (
     <>
-
-      <Form
+      <Row  justify="center" align="middle" style={{minHeight: '40vh'}}>
+        <Col span={12}>
+          <img className="logo" src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"/>
+          <Form
         {...layout}
         name="basic"
         initialValues={{ remember: true }}
@@ -85,7 +87,6 @@ const Loginn = () => {
 
         <Form.Item {...tailLayout} name="remember" valuePropName="checked">
           <a onClick={showModal}><span className="blueColor">Forgot Password?</span></a>
-
         </Form.Item>
 
         <Form.Item {...tailLayout}>
@@ -94,7 +95,10 @@ const Loginn = () => {
         </Button>
         </Form.Item>
       </Form>
-      <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null}>
+        </Col>
+      </Row>
+      
+      <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null} width={700}>
         {
           <>
             <p>Please enter your email address that you have associated. We will send an email link to reset your password</p>
@@ -105,8 +109,7 @@ const Loginn = () => {
               <Form.Item>
                 <Button block type="primary" htmlType="submit">
                   Submit
-        </Button>
-
+                </Button>
               </Form.Item>
             </Form>
           </>
@@ -116,4 +119,4 @@ const Loginn = () => {
   )
 }
 
-export default Loginn;
+export default LoginComponent;

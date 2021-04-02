@@ -1,17 +1,14 @@
-import { Layout, Menu, Breadcrumb, Timeline, Dropdown } from 'antd';
-// import { Component, useEffect } from 'react';
-import React, {useContext, createContext, useState } from 'react';
+import { Layout, Menu, Dropdown, Popover } from 'antd';
 import {
   SettingOutlined,
   InfoCircleOutlined 
 } from '@ant-design/icons';
-import './layout.css';
+
 import { getUser } from '../api/api';
 import AddRole from '../rolemgmt/addrole';
 import ViewUser from '../usermgmt/viewuser';
 import TimeLine from '../timeline/timeline';
-import Loginn from '../login/login';
-
+import LoginComponent from '../login/login';
 import {
   BrowserRouter as Router,
   Switch,
@@ -21,12 +18,13 @@ import {
 import Mainlead from '../leadmanagement/leadmanagement';
 import UpdatePwd from '../usermgmt/updatepwd';
 
+import './layout.css';
 
-const LayoutWrapper = () => {
-
+    const content = <>LMS Version: 0.1</>
+    const LayoutWrapper = () => {
+    const { Header, Content, Footer } = Layout;
+    getUser();
   
-  const { Header, Content, Footer } = Layout;
-  getUser();
   const menu = (<Menu mode="horizontal" >
     <Menu.Item key="1"><Link to="/">Login</Link></Menu.Item>
     <Menu.Item key="2"><Link to="/roles">Manage Roles</Link></Menu.Item>
@@ -34,6 +32,7 @@ const LayoutWrapper = () => {
     <Menu.Item key="5"><Link to="/leads">Leads</Link></Menu.Item>
     <Menu.Item key="6"><Link to="/updatepwd">Update Password</Link></Menu.Item>
   </Menu>);
+
   return (
     <>
       <Layout>
@@ -42,10 +41,14 @@ const LayoutWrapper = () => {
             <div className="logo" />
             <Dropdown overlay={menu} className="goRight">
               <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                <span><SettingOutlined style={{ fontSize: '20px' }} /></span>
+                <span><SettingOutlined  /></span>
               </a>
             </Dropdown>
+            
+            <Popover content={content} title="About LMS">
             <InfoCircleOutlined style={{color: "white", fontSize: '15px'}}/>
+
+        </Popover>
           </Header>
           <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>    
             <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
@@ -55,7 +58,6 @@ const LayoutWrapper = () => {
                 </Route>
                 <Route path="/viewuser">
                   <ViewUser />
-                
                 </Route>
                 <Route path="/timeline">
                   <TimeLine />
@@ -67,12 +69,12 @@ const LayoutWrapper = () => {
                   <UpdatePwd/>
                 </Route>
                 <Route path="/">
-                  <Loginn />
+                  <LoginComponent />
                 </Route>
               </Switch>
             </div>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>MIT License - 2021 &copy; </Footer>
+          <Footer style={{ textAlign: 'center' }}>MIT License - 2021 &copy; Copyrights reserved LMS </Footer>
         </Router>
       </Layout>
     </>

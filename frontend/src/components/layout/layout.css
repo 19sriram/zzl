@@ -5,6 +5,7 @@
     margin: 16px 24px 16px 0;
     background: rgba(255, 255, 255, 0.2);
   }
+  
   .site-layout .site-layout-background {
     background: #fff;
     height: 85vh
@@ -14,4 +15,8 @@
   }
   .ant-dropdown-menu  {
     padding:  10px 20px;
+  }
+  .ant-dropdown-link {
+    color: white;
+    font-size: 40px;
   }
