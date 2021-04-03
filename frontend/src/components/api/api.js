@@ -23,8 +23,12 @@ let _deletedUsers = 'viewdeleteuser';
 let _changepassword = 'updatepassword';
 let _sendpassword = 'sendpassword';
 
-const options = {
+const headerOptions = {
   headers: { 'Content-Type': 'application/json' }
+};
+
+const options = {
+  headers: { 'Content-Type': 'application/json', token: sessionStorage.getItem('auth-token') }
 };
 
 const dummy = { "group": "system", "mobile": "99405528282", "profile": "system", "createdById": "001", "createdByName": "Rajesh", "createdByRole": "Admin" };
@@ -87,7 +91,7 @@ export async function checkUser(userInfo) {
   let { username, password } = userInfo
   let userData = { email: userInfo.username, password: userInfo.password }
 
-  let response = await axios.post(baseURL + userFragment + _checkuser, userData, options);
+  let response = await axios.post(baseURL + userFragment + _checkuser, userData, headerOptions);
   if (!response.data.status === 200) {
     console.error('Error:', response.data.message);
     return response
@@ -95,6 +99,8 @@ export async function checkUser(userInfo) {
   else {
     let _decodedtoken = response.data.accessToken?jwtDecoder(response.data.accessToken):'';
     sessionStorage.setItem('auth-token', response.data.accessToken?.length > 0 ? response.data.accessToken : '');
+    sessionStorage.setItem('uname',userInfo.username);
+    console.log(_decodedtoken);
     let role = _decodedtoken.role;
     response.data = {...response.data,role:role}
     return response;
@@ -153,7 +159,7 @@ export async function searchUser (query) {
   // user change password
 
   export async function changepassword(email,password) {
-    let userData = { email: email, password: password }
+    let userData = { email: sessionStorage.getItem('uname'), password: password }
     let response = await axios.post(baseURL + userFragment + _changepassword, userData, options);
     if (!response.ok) {
       console.error('Error');

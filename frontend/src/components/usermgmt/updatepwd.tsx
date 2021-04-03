@@ -12,7 +12,7 @@ const UpdatePwd = () => {
   //
   const [isModalVisible, setIsModalVisible] = useState(true);
 
-  const InitialValue = { email: 'zx@cl.om' };
+  const InitialValue = { email: sessionStorage.getItem('uname') };
 
   const layout = {
     labelCol: { span: 8 },
@@ -47,7 +47,7 @@ const UpdatePwd = () => {
     <Modal title={'Change Password'} visible={isModalVisible} onCancel={handleCancel} footer={null}>
       <Form {...layout} form={form} name="control-hooks" onFinish={onFinish} initialValues={InitialValue}>
         <Form.Item name={['email']} label="Username" rules={[{ required: false, message: '' }]}>
-          <Input disabled defaultValue={"2"} />
+          <Input disabled defaultValue={sessionStorage.getItem('uname')?.toString()} />
         </Form.Item>
         <Form.Item name={['password']} label="New Password" rules={[{ required: true, message: 'Enter your new password' }]}>
           <Input.Password />
