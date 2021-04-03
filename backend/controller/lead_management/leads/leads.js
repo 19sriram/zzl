@@ -59,7 +59,8 @@ const updateleadstatus = async (req, res) => {
         var date = new Date();
         var status={
             status:req.body.status,
-            date:date.toISOString().slice(0,10) +" "+ date.toISOString().slice(11,19),
+            date:date.toISOString().slice(0,10),
+            time:date.toISOString().slice(11,19),
             createdById:req.body.createdById,
             createdByRole:req.body.createdByRole,
             createdByName:req.body.createdByName
@@ -101,12 +102,51 @@ const viewleadstatus = async (req, res) => {
 };
 
 
+const addnotification = async (req, res) => {
+    try {
+
+        var date = new Date();
+        req.body.isActive = true;
+        req.body.createdOn=date.toISOString().slice(0,10) +" "+ date.toISOString().slice(11,19);
+        
+        const savenotification = await leads.savenotificationdetails(req.body)
+        if(savenotification){
+            res.send({ status: 200, result: "Success", message: 'Notification Added Successfully!'});
+        }
+        else{
+            res.send({ status: 400, result: "Failure", Message: 'Some Thing Went Wrong!'});
+        }
+
+    } catch(err) {
+        res.send({ status: 400, msg: 'Some Thing Went Wrong!'}); 
+    }
+};
+
+const viewnotification = async (req, res) => {
+    try {
+
+        const viewnotification = await leads.viewnotificationdetails(req.query);
+        if(viewnotification.length!=0){
+            res.send({ status: 200, result: 'Success', data:viewnotification});
+        }
+        else{
+            res.send({ status: 200, result: 'Failure', message:"Data Not Found"});
+        }
+
+    } catch(err) {
+        res.send({ status: 400, result:'Failure', message: 'Some Thing Went Wrong!'}); 
+    }
+};
+
+
 
 module.exports = {
      addlead,
      viewlead,
      updateleadstatus,
-     viewleadstatus
+     viewleadstatus,
+     addnotification,
+     viewnotification
    
 
 };
