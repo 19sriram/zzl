@@ -58,15 +58,30 @@ const viewleaddetails = async(data) => {
     try {
      
         var query=[];
+        var leads;
         query.push({$match:{"isActive":true}})
 
          if(data.leadId)
          {
             query.push({$match:{"leadId":data.leadId}})
-        }
-        const leads = await model.aggregate([
+         }
+         if(data.size)
+         {
+            query.push({$match:{"status":true}});
+            query.push({$skip:0});
+            query.push({$limit:parseInt(data.size)});
+
+            leads = await model.aggregate([
+                query
+            ]);
+
+         }
+         else
+         {
+         leads = await model.aggregate([
             query
         ]);  
+        }
         return leads;
     } catch(err) {
         return false
@@ -112,34 +127,9 @@ const viewleadstatusdetails = async(data) => {
 };
 
 const notificationSchema = mongoose.Schema({
-    leadId:String,
-    leadOwner: String,
-    company: String,
-    firstName: String,
-    lastName: String,
-    title: String,
-    email: String,
-    phone: String,
-  /*  fax: String,*/
-    mobile: String,
-    website: String,
-    leadSource: String,
-    leadStatus: String,
-    industry: String,
-   /* employeeCount: Number,
-    annualRevenue: String,
-    rating: String,
-    skypeId: String,
-    secondaryEmail: String,
-    twitterId: String,*/
-   address:String,
-  /*  street: String,
-    city: String,*/
-    state: String,
-    zipcode: String,
-    country: String,
-    description: String,
-    status_history:Array,
+    text:String,
+    time: String,
+    date: String,
     isActive:Boolean,
     createdById:String,
     createdByRole:String,
@@ -153,7 +143,7 @@ const notificationSchema = mongoose.Schema({
 const savenotificationdetails = async(data) => {
     try {
         const notification = new model1(data);
-        const savedata = await user.save();
+        const savedata = await notification.save();
         return savedata;
     } catch(err) {
         return false
@@ -168,7 +158,7 @@ const viewnotificationdetails = async(data) => {
 
          if(data.userId)
          {
-            query.push({$match:{"userId":data.userId}})
+            query.push({$match:{"createdById":data.userId}})
         }
         const notification = await model1.aggregate([
             query
