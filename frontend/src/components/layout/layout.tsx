@@ -138,3 +138,11 @@ function PrivateRoute({ children, ...rest }: IProps) {
 }
 
 export default LayoutWrapper;
+
+
+/**--
+ * TODO:
+ * 1. history for url
+ * 2. How to show header when user logged in
+ * 3. Authorization for menus to be handled
+ */
