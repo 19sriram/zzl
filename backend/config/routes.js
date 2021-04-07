@@ -4,6 +4,8 @@ const router = express.Router();
 const user = require('../controller/lead_management/users/users');
 const role = require('../controller/lead_management/roles/roles');
 const lead = require('../controller/lead_management/leads/leads');
+const lov = require('../controller/lead_management/lov/lov');
+
 const auth = require('./auth');
 
 
@@ -27,6 +29,12 @@ let routes = (app) => {
     router.get('/viewlead',auth, lead.viewlead);
     router.post('/updateleadstatus',auth,lead.updateleadstatus);
     router.get('/viewleadstatus',auth,lead.viewleadstatus);
+    router.post('/addnotification',auth,lead.addnotification);
+    router.get('/viewnotification',auth,lead.viewnotification);
+
+
+    router.get('/viewsources',auth,lov.viewsource);
+    router.get('/viewindustry',auth,lov.viewindustry);
 
   app.use("/api/user", router);
 };
