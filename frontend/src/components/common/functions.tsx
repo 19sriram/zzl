@@ -13,7 +13,7 @@ export const role = (userRole: string) => assignedRole = userRole
 
 export const getRole = () => assignedRole
 
-export const removeRole = () => assignedRole = '';
+export const removeRole = () => {assignedRole = ''; sessionStorage.clear()}
 
 
 export function useProvideAuth(values?: any) {

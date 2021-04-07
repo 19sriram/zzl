@@ -1,4 +1,4 @@
-import  {  createContext, useState, ReactNode } from "react";
+import  {  createContext,  ReactNode } from "react";
 import { Layout, Menu, Dropdown, Popover } from 'antd';
 import {
   SettingOutlined,
@@ -33,9 +33,10 @@ interface IProps {
 
 const content = <>LMS Version: 0.1</>
 
-const LayoutWrapper = () => {
+const LayoutWrapper = (props: any) => {
 
   const { Header, Content, Footer } = Layout;
+ 
   getUser();
   const menu = (<Menu mode="horizontal" >
     <Menu.Item key="1"><Link to="/">Login</Link></Menu.Item>
@@ -45,13 +46,8 @@ const LayoutWrapper = () => {
     <Menu.Item key="6"><Link to="/updatepwd">Update Password</Link></Menu.Item>
     <Menu.Item key="7"><Link to='/' onClick={removeRole}>Signout</Link></Menu.Item>
   </Menu>);
-
-  return (
-    <>
-      <Layout>
-        <ProvideAuth>
-          <Router history={history}>
-            <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+  const Headerr = ()=> (
+    <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
               <div className="logo" />
               <Dropdown overlay={menu} className="goRight">
                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
@@ -64,6 +60,18 @@ const LayoutWrapper = () => {
 
               </Popover>
             </Header>
+  )
+  return (
+    <>
+   
+      <Layout>
+      
+        <ProvideAuth>
+          <Router history={history}>
+            
+           
+           {Headerr()}
+     
             <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
                 <Switch>
