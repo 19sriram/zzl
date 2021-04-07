@@ -3,7 +3,7 @@ import  { useState } from 'react';
 import { role, getRole } from '../common/functions';
 import { checkUser, sendpassword } from '../api/api';
 import './login.css';
-
+import history from '../common/history'
 const LoginComponent = () => {
   //
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -36,7 +36,7 @@ const LoginComponent = () => {
         message.error('Error ' + rep.data.message)
       }
       role(rep.data.role);
-      console.log(getRole())
+      history.push('/leads');
     });
   };
 

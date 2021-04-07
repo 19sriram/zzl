@@ -28,7 +28,7 @@ const ViewUser = () => {
   //const
   const setResponsee = (response:any)=>{
     setData(response);
-      setselectedUser(response[0]);
+      setselectedUser(response?response[0]:'');
   }
 
   {/*-Get user information-*/ }
@@ -91,14 +91,12 @@ const ViewUser = () => {
   };
 
   //
-  console.log(userList)
   return (
     
     <>
     <PageHeader title={'USERS'}/>
     {
-      
-      userList.length>1?
+      userList?.length>1?
       <div>
       <Row>
         <Col span={14}><Card title="Users List" extra={<>
