@@ -5,12 +5,14 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const passport = require('passport');
 const chalk = require('chalk');
+const cors = require('cors');
 
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(passport.initialize());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 
 require('dotenv').config();
 require('./config/db.mongoose');
