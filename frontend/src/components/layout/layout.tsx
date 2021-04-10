@@ -1,4 +1,5 @@
-import  {  createContext,  ReactNode } from "react";
+import React from "react";
+import { createContext, ReactNode, useEffect } from "react";
 import { Layout, Menu, Dropdown, Popover } from 'antd';
 import {
   SettingOutlined,
@@ -36,42 +37,55 @@ const content = <>LMS Version: 0.1</>
 const LayoutWrapper = (props: any) => {
 
   const { Header, Content, Footer } = Layout;
- 
+  const [path, setPath] = React.useState('');
+
+  useEffect(() => {
+    setPath(history.location.pathname.substring(1));
+  }, [])
+  useEffect(() => {
+    return history.listen((location) => {
+      setPath(location.pathname.substring(1));
+    })
+  }, [history])
+
+
   getUser();
   const menu = (<Menu mode="horizontal" >
-    <Menu.Item key="1"><Link to="/">Login</Link></Menu.Item>
+    <Menu.Item key="1"><Link to="/login">Login</Link></Menu.Item>
     <Menu.Item key="2"><Link to="/roles">Manage Roles</Link></Menu.Item>
     <Menu.Item key="4"><Link to="/viewuser">Manage Users</Link></Menu.Item>
     <Menu.Item key="5"><Link to="/leads">Leads</Link></Menu.Item>
     <Menu.Item key="6"><Link to="/updatepwd">Update Password</Link></Menu.Item>
-    <Menu.Item key="7"><Link to='/' onClick={removeRole}>Signout</Link></Menu.Item>
+    <Menu.Item key="7"><Link to='/login' onClick={removeRole}>Signout</Link></Menu.Item>
   </Menu>);
-  const Headerr = ()=> (
+  const Headerr = () => (
     <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
-              <div className="logo" />
-              <Dropdown overlay={menu} className="goRight">
-                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                  <span><SettingOutlined /></span>
-                </a>
-              </Dropdown>
+      <div className="logo" />
+      <Dropdown overlay={menu} className="goRight">
+        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+          <span><SettingOutlined /></span>
+        </a>
+      </Dropdown>
 
-              <Popover content={content} title="About LMS">
-                <InfoCircleOutlined style={{ color: "white", fontSize: '15px' }} />
+      <Popover content={content} title="About LMS">
+        <InfoCircleOutlined style={{ color: "white", fontSize: '15px' }} />
 
-              </Popover>
-            </Header>
+      </Popover>
+    </Header>
   )
+
+
   return (
     <>
-   
+
       <Layout>
-      
+
         <ProvideAuth>
           <Router history={history}>
-            
-           
-           {Headerr()}
-     
+
+
+            {path === 'login' || '' ? <></> : Headerr()}
+
             <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
                 <Switch>
@@ -84,13 +98,13 @@ const LayoutWrapper = (props: any) => {
                   <PrivateRoute path="/timeline">
                     <TimeLine />
                   </PrivateRoute>
-                  <PrivateRoute path="/leads">
+                  <Route path="/leads">
                     <Mainlead />
-                  </PrivateRoute>
+                  </Route>
                   <PrivateRoute path="/updatepwd">
                     <UpdatePwd />
                   </PrivateRoute>
-                  <Route path="/">
+                  <Route path="/login">
                     <LoginComponent />
                   </Route>
                 </Switch>

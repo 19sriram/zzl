@@ -24,11 +24,16 @@ let _changepassword = 'updatepassword';
 let _sendpassword = 'sendpassword';
 
 const headerOptions = {
-  headers: { 'Content-Type': 'application/json' }
+  headers: { 'Content-Type': 'null',
+  'Access-Control-Allow-Origin': 'http://localhost:3000',
+  'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+  'Access-Control-Allow-Credentials': 'true' }
 };
 
 const options = {
-  headers: { 'Content-Type': 'application/json', token: sessionStorage.getItem('auth-token') }
+  headers: { 'Content-Type': 'null',
+  'Access-Control-Allow-Origin': 'http://localhost:3000',
+  'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS', 'Access-Control-Allow-Credentials': 'true',token: sessionStorage.getItem('auth-token') }
 };
 
 const dummy = { "group": "system", "mobile": "99405528282", "profile": "system", "createdById": "001", "createdByName": "Rajesh", "createdByRole": "Admin" };
@@ -110,7 +115,7 @@ export async function checkUser(userInfo) {
 {/* ---   ROLES   --- */ }
 // get roles
 export async function getRoles() {
-  let response = await axios.get(baseURL + userFragment + _viewrole);
+  let response = await axios.get(baseURL + userFragment + _viewrole, options);
   if (!response.ok) {
     console.error('Error');
   }
