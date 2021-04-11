@@ -16,3 +16,8 @@ zzl is a CRM to manage leads and status of it which comes along with access mana
 1. usermanagement and rolemanagement
 2. Login and leadmanagement
 3. 
+
+
+## Build
+
+1. / Build location
