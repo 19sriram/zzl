@@ -15,6 +15,7 @@ const userSchema = mongoose.Schema({
     profile: String,
     isActive:Boolean,
     status:Boolean,
+    code:Number,
     createdById:String,
     createdByRole:String,
     createdByName:String,
@@ -40,9 +41,10 @@ const viewuserdetails = async(data) => {
         var query=[];
         var users;
 
+
          if(data.email)
          {
-             query.push({$match:{"email":data.email}});
+             query.push({$match:{$or:[{"email":data.email},{"mobile":data.email}]}});
          }
          if(data.isActive)
          {
@@ -169,10 +171,24 @@ const updateactivestatus = async(data) => {
 
 const updatepassworddetails = async(data) => {
     try {
-  
          const users = await model.updateMany(
             {"email" : data.email},
             {$set: {"password" : data.password,"createdOn": new Date()}},
+            {new : true}
+        );
+         return users;
+    } catch(err) {
+
+        return false
+    }
+};
+
+const updatecodedetails = async(email,code) => {
+    try {
+        console.log(email,code)
+         const users = await model.updateMany(
+            {"email" : email},
+            {$set: {"code" : code,"createdOn": new Date()}},
             {new : true}
         );
 
@@ -192,5 +208,6 @@ module.exports = {
     updatepassworddetails,
     updateactivestatus,
     searchuserdetails,
-    viewdeleteuserdetails
+    viewdeleteuserdetails,
+    updatecodedetails
  };

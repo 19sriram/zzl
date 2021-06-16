@@ -138,6 +138,20 @@ const viewnotification = async (req, res) => {
     }
 };
 
+const searchlead = async (req, res) => {
+    try {
+        const searchlead = await leads.searchleaddetails(req.query)
+        if(searchlead.length!=0){
+            res.send({ status: 200, result: 'Success', data:searchlead});
+        }
+        else{
+            res.send({ status: 400, result: 'Failure', message:"Data Not Found"});
+        }
+
+    } catch(err) {
+        res.send({ status: 400, result:'Failure', message: 'Some Thing Went Wrong!'}); 
+    }
+};
 
 
 module.exports = {
@@ -146,7 +160,8 @@ module.exports = {
      updateleadstatus,
      viewleadstatus,
      addnotification,
-     viewnotification
+     viewnotification,
+     searchlead
    
 
 };

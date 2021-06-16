@@ -130,6 +130,7 @@ const notificationSchema = mongoose.Schema({
     text:String,
     time: String,
     date: String,
+    leadId:String,
     isActive:Boolean,
     createdById:String,
     createdByRole:String,
@@ -161,9 +162,50 @@ const viewnotificationdetails = async(data) => {
             query.push({$match:{"createdById":data.userId}})
         }
         const notification = await model1.aggregate([
-            query
+            {$match:{"createdById":data.userId}},
+            {
+                $lookup:
+                    {
+                      from: "leads",
+                      localField: "leadId",
+                      foreignField:"leadId",
+                      as: "leadDetails"
+                    }
+                },
+               { $unwind : "$leadDetails" },
+                {$project:{
+                           "time": "$time",
+                           "date": "$date",
+                           "createdById": "$createdById",
+                           "createdByRole": "$createdByRole",
+                           "createdByName": "$createdByName",
+                           "leadId":"$leadId",
+                           "mobile":"$leadDetails.mobile",
+                           "isActive": "$isActive",
+                           "leadStatus":"$leadDetails.mobile",
+                           "createdOn": "$createdOn",
+               
+                    
+                    }}
         ]);  
         return notification;
+    } catch(err) {
+        return false
+    }
+};
+
+const searchleaddetails = async(data) => {
+    try {
+
+        var query
+       
+        var leads = await model.aggregate([
+
+        {  $match: { $or: [{ firstname: data.data }, { lastname: data.data },{ email: data.data },{ mobile: data.data },{ leadSource: data.data }] }}
+              
+        ]);
+ 
+         return leads;
     } catch(err) {
         return false
     }
@@ -176,5 +218,6 @@ module.exports = {
     updateleadstatus,
     viewleadstatusdetails,
     savenotificationdetails,
-    viewnotificationdetails
+    viewnotificationdetails,
+    searchleaddetails
  };

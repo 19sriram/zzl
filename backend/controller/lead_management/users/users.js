@@ -10,9 +10,10 @@ var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: 'rajeshworldstar@gmail.com',
-      pass: 'tqfcjsrxxxaivwlz'
+      pass: 'byqoldhizwldedwf'
     }
   });
+
 
 
 const adduser = async (req, res) => {
@@ -29,6 +30,7 @@ const adduser = async (req, res) => {
         req.body.createdOn = '';
         req.body.isActive = true;
         req.body.status = true;
+        req.body.code=0;
         var date = new Date();
 
         req.body.createdOn=date.toISOString().slice(0,10) +" "+ date.toISOString().slice(11,19);
@@ -191,14 +193,13 @@ const updatepassword = async (req, res) => {
 const userlogin = async (req, res) => {
     try {
 
-        const getUser = await users.viewuserdetails({email:req.body.email});
+        const getUser = await users.viewuserdetails({email:req.body.username});
 
         if(getUser.length === 0)
         {
             res.send({ status: 400, result: "Failure", message: 'User Not Found!'}); 
             return false 
         }
-     
         const match = await bcrypt.compare(req.body.password, getUser[0].password);
     
         if (match) { 
@@ -213,26 +214,23 @@ const userlogin = async (req, res) => {
     }
 };
 
-const sendpassword = async (req, res) => {
+const sendfourdigitcode = async (req, res) => {
     try {
         const viewuser = await users.viewuserdetails(req.body)
+        let code=Math.floor(1000 + Math.random() * 9000);
         if(viewuser.length!=0){
             var mailOptions = {
                 from: 'rajeshworldstar@gmail.com',
-                to: 'rajeshsvce3993@gmail.com',
-                subject: 'Temporary Password',
-                text: 'Password:Aa123!@#'
+                to: req.body.email,
+                subject: 'Verification Code',
+                text: "Your Verification Code is "+code+"."
               };
-              const salt = await bcrypt.genSalt(10);
-              const hashedPassword = await bcrypt.hash('Aa123!@#', salt);
-              req.body.password = hashedPassword;
-              
+
               transporter.sendMail(mailOptions, function(error, info){
                 if (error) {
                   console.log(error);
                 } else {
-                  console.log(req.body)
-                    const updatepassword =  users.updatepassworddetails(req.body)
+                    const updatecode =  users.updatecodedetails(req.body.email,code)
                     res.send({ status: 200, result:"Success", message: "Email Sent Successfully" });                }
               });
               
@@ -246,6 +244,34 @@ const sendpassword = async (req, res) => {
     }
 };
 
+
+const verifyFourdigitCode = async (req, res) => {
+    try {
+
+        const getUser = await users.viewuserdetails({email:req.body.email});
+
+        if(getUser.length === 0)
+        {
+            res.send({ status: 400, result: "Failure", message: 'User Not Found!'}); 
+            return false 
+        }
+        else{
+            if(getUser[0].code===req.body.code)
+            {
+                res.send({ status: 200, result: "Success", message: 'Verified Success!'}); 
+            }
+            else{
+                res.send({ status: 200, result: "Failure", message: "Entered Code Does't Match!"}); 
+
+            }
+        }
+        
+
+    } catch(err) {
+        res.send({ status: 400, msg: 'Some Thing Went Wrong!'}); 
+    }
+};
+
 module.exports = {
      adduser,
      viewuser,
@@ -256,7 +282,8 @@ module.exports = {
      updateactivestatus,
      searchuser,
      viewdeleteuser,
-     sendpassword
+     sendfourdigitcode,
+     verifyFourdigitCode
      
 
 };

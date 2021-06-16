@@ -21,9 +21,10 @@ let routes = (app) => {
     router.post('/addrole',auth,role.addrole);
     router.get('/viewrole',auth, role.viewrole);
     router.post('/updaterole',auth,role.updaterole);
-    router.post('/updatepassword',auth, user.updatepassword);
+    router.post('/updatepassword',user.updatepassword);
     router.get('/getroletree',auth, role.getroletree);
-    router.post('/sendpassword',auth,user.sendpassword);
+    router.post('/sendcode',user.sendfourdigitcode);
+    router.post('/verifycode',user.verifyFourdigitCode);
     
     router.post('/addlead',auth, lead.addlead);
     router.get('/viewlead',auth, lead.viewlead);
@@ -31,6 +32,7 @@ let routes = (app) => {
     router.get('/viewleadstatus',auth,lead.viewleadstatus);
     router.post('/addnotification',auth,lead.addnotification);
     router.get('/viewnotification',auth,lead.viewnotification);
+    router.get('/searchlead',auth, lead.searchlead);
 
 
     router.get('/viewsources',auth,lov.viewsource);
