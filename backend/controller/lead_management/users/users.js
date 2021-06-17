@@ -201,9 +201,16 @@ const userlogin = async (req, res) => {
             return false 
         }
         const match = await bcrypt.compare(req.body.password, getUser[0].password);
-    
+   
         if (match) { 
-            const token = JWT.sign({ id: getUser[0].id,role:getUser[0].role }, process.env.JWT_SECRET_KEY);
+            const token = JWT.sign({ 
+                id: getUser[0]._id,
+                role:getUser[0].role,
+                firstname: getUser[0].firstname,
+                lastname: getUser[0].lastname,
+                email: getUser[0].email,
+                mobile:getUser[0].mobile
+            }, process.env.JWT_SECRET_KEY);
             res.send({ status: 200, result:"Success" ,message: "LoggedIn Successfully!", accessToken: token });
         } else { 
             res.send({ status: 400, result:"Failure", message: "Incorrect Password!" });
