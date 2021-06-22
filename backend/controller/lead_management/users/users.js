@@ -9,8 +9,8 @@ var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'rajeshworldstar@gmail.com',
-      pass: 'byqoldhizwldedwf'
+      user: 'dummylmsemailid@gmail.com',
+      pass: 'india2020@'
     }
   });
 
@@ -227,7 +227,7 @@ const sendfourdigitcode = async (req, res) => {
         let code=Math.floor(1000 + Math.random() * 9000);
         if(viewuser.length!=0){
             var mailOptions = {
-                from: 'rajeshworldstar@gmail.com',
+                from: 'dummylmsemailid@gmail.com',
                 to: req.body.email,
                 subject: 'Verification Code',
                 text: "Your Verification Code is "+code+"."
